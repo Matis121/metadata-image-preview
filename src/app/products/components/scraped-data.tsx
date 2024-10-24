@@ -1,50 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
-import { GetMetaData } from "../server/getMetaData";
+import { LuX } from "react-icons/lu";
+import { DeleteProduct } from "../server/deleteProduct";
 
-type MetaProducts = {
-  title: string;
-  description: string;
-  images: string[];
-  url: string;
-};
-
-export function ScrapedData({ imageUrl }: { imageUrl: string }) {
-  const [metaProduct, setMetaProduct] = useState<MetaProducts | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const getData = async () => {
-    setLoading(true);
-    try {
-      const res: any = await GetMetaData(imageUrl);
-      setMetaProduct(res);
-    } catch (error) {
-      console.error("Error fetching metadata:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, [imageUrl]);
-
+export function ScrapedData({ singleImage }: { singleImage: any }) {
+  console.log(singleImage.id);
   const printComponent = () => {
-    if (loading) {
+    if (singleImage.imagePath !== undefined) {
       return (
-        <div className="h-full flex items-center justify-center">
-          <p>Loading...</p>
-        </div>
-      );
-    }
-
-    if (metaProduct?.images[0]) {
-      return (
-        <div className="flex items-center justify-center flex-col h-[400px] break-words border overflow-hidden hover:cursor-pointer">
+        <div className="relative flex items-center justify-center flex-col h-[400px] break-words border overflow-hidden hover:cursor-pointer">
+          <span className="absolute top-2 right-2 p-2 border bg-white rounded-full hover:bg-neutral-100 transition-all">
+            <LuX size={20} onClick={() => DeleteProduct(singleImage.id)} />
+          </span>
           <a
-            href={`${metaProduct.url}`}
+            href={`${singleImage.productUrl}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -53,15 +23,17 @@ export function ScrapedData({ imageUrl }: { imageUrl: string }) {
               width={400}
               height={400}
               style={{ width: "100%", height: "auto" }}
-              src={metaProduct.images[0]}
+              src={singleImage.imagePath}
             />
           </a>
         </div>
       );
     }
-
     return (
-      <div className="h-full flex items-center justify-center">
+      <div className="relative h-full flex items-center justify-center border">
+        <span className="absolute top-2 right-2 p-2 border bg-white rounded-full hover:bg-neutral-100 transition-all">
+          <LuX size={20} />
+        </span>
         <p>No image available.</p>
       </div>
     );

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 function TopNav() {
   return (
-    <nav className="flex w-full items-center justify-between p-4 text-xl font-semibold border-b">
+    <nav className="flex items-center justify-between p-4 text-xl font-semibold border-b">
       <div className="font-bold uppercase">Fitsy</div>
       <div>
         <Button>Sign in</Button>
@@ -25,9 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex flex-col gap-8 mb-8">
+      <body className="w-full flex flex-col gap-8 mb-8">
         <TopNav />
-        <div className="px-24">{children}</div>
+        <div className="px-4 md:px-16 lg:px-24">{children}</div>
       </body>
     </html>
   );

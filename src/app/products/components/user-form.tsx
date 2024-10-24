@@ -18,7 +18,7 @@ export function NewUserForm() {
     <>
       <form
         ref={formRef}
-        className="flex items-center gap-2 w-[550px]"
+        className="flex flex-col justify-center items-center gap-4 w-[320px] md:w-[550px] md:flex-row"
         action={handleSubmit}
       >
         <Input
@@ -27,9 +27,7 @@ export function NewUserForm() {
           placeholder="Here place your new product url..."
           required
         />
-        <Button variant="outline" className="self-end">
-          Add product
-        </Button>
+        <Button variant="outline">Add product</Button>
       </form>
     </>
   );
