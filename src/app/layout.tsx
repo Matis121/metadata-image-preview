@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Fitsy - store your favorites products",
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className="w-full flex flex-col gap-8 mb-8 bg-neutral-100">
         <TopNav />
         <div className="px-4 md:px-16 lg:px-24">{children}</div>
+        <Toaster position="top-center" />
       </body>
     </html>
   );

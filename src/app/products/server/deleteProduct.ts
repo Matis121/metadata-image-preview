@@ -9,8 +9,8 @@ export async function DeleteProduct(productId: number) {
   try {
     await db.delete(images).where(eq(images.id, productId));
     revalidatePath("/");
-    console.log(`Product with id ${productId} deleted successfully.`);
+    return { success: "Product has been deleted" };
   } catch (error) {
-    console.error("Error deleting product:", error);
+    return { error: "Error while deleting product" };
   }
 }
