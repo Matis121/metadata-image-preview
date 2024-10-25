@@ -62,13 +62,11 @@ export function ScrapedData({ singleImage }: { singleImage: any }) {
             </div>
           ) : (
             <div className="relative flex flex-col justify-center rounded-lg h-[200px] md:h-[300px] lg:h-[400px] break-words border overflow-hidden">
-              <span className="absolute flex top-2 right-2 p-2 bg-neutral-800 text-white shadow-md rounded-full hover:bg-neutral-700 transition-all">
-                <LuX
-                  size={20}
-                  onClick={handleDelete}
-                  className="hover:cursor-pointer"
-                />
-              </span>
+              <LuX
+                size={35}
+                onClick={handleDelete}
+                className="hover:cursor-pointer absolute flex top-2 right-2 p-2 bg-neutral-800 text-white shadow-md rounded-full hover:bg-neutral-700 transition-all"
+              />
               <a
                 href={`${singleImage.productUrl}`}
                 target="_blank"
