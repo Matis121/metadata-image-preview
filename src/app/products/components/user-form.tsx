@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AddNewProduct } from "../server/addNewProduct";
 import { useRef } from "react";
+import { LuPlus } from "react-icons/lu";
 
 export function NewUserForm() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -15,7 +16,7 @@ export function NewUserForm() {
   };
 
   return (
-    <>
+    <div className="py-6 px-16 w-full flex items-center justify-center bg-white rounded-xl border shadow-sm">
       <form
         ref={formRef}
         className="flex flex-col justify-center items-center gap-4 w-[320px] md:w-[550px] md:flex-row"
@@ -24,11 +25,13 @@ export function NewUserForm() {
         <Input
           name="url"
           type="text"
-          placeholder="Here place your new product url..."
+          placeholder="Paste your url to add new product..."
           required
         />
-        <Button variant="outline">Add product</Button>
+        <Button variant="outline">
+          <LuPlus /> Add product
+        </Button>
       </form>
-    </>
+    </div>
   );
 }
