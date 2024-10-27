@@ -1,8 +1,3 @@
-"use server";
-
-import { revalidatePath } from "next/cache";
-import { db } from "@/app/db";
-import { images } from "@/app/db/schema";
 import { getLinkPreview } from "link-preview-js";
 
 type LinkPreviewMetadata = {
@@ -12,7 +7,7 @@ type LinkPreviewMetadata = {
   images: string[];
 };
 
-export async function AddProduct(imageUrl: string) {
+export async function ScrapeMetaData(imageUrl: string) {
   const metaData: LinkPreviewMetadata = await getLinkPreview(imageUrl, {
     headers: {
       "User-Agent":
@@ -26,18 +21,5 @@ export async function AddProduct(imageUrl: string) {
       "Cache-Control": "no-cache",
     },
   });
-  try {
-    const newImage: typeof images.$inferInsert = {
-      title: metaData.title,
-      description: metaData.description,
-      productUrl: metaData.url,
-      imagePath: metaData.images[0],
-    };
-
-    await db.insert(images).values(newImage);
-    revalidatePath("/");
-    return { success: "Product has been added" };
-  } catch (error) {
-    return { error: "Error while adding product" };
-  }
+  return metaData;
 }

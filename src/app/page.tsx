@@ -1,11 +1,11 @@
-import { DisplayProducts } from "./products/components/display-products";
-import { NewUserForm } from "./products/components/user-form";
+import { ListOfProducts } from "./products/_components/listOfProducts";
+import { UserForm } from "./products/_components/userForm";
 
 export default async function Home() {
   return (
     <div className="w-full flex flex-col items-center gap-20">
-      <NewUserForm />
-      <DisplayProducts />
+      <UserForm />
+      <ListOfProducts />
     </div>
   );
 }

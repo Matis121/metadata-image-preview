@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { LuX } from "react-icons/lu";
 import { useState } from "react";
-import { DeleteProduct } from "../server/deleteProduct";
+import { DeleteProduct } from "../actions/deleteProduct";
 
-export function ScrapedData({ singleImage }: { singleImage: any }) {
+export function SingleProduct({ singleImage }: { singleImage: any }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {

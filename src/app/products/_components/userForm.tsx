@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AddProduct } from "../server/addProduct";
+import { AddProduct } from "../actions/addProduct";
 import { LuPlus } from "react-icons/lu";
 import { useFormStatus } from "react-dom";
 import { useRef } from "react";
@@ -42,7 +42,7 @@ function SubmitButton() {
     </Button>
   );
 }
-export function NewUserForm() {
+export function UserForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const ProductSchema = z.object({

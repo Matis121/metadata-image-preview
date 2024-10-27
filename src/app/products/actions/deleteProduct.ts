@@ -1,8 +1,8 @@
 "use server";
 
-import { db } from "@/app/db";
+import { db } from "@/drizzle";
 import { eq } from "drizzle-orm";
-import { images } from "@/app/db/schema";
+import { images } from "@/drizzle/schema";
 import { revalidatePath } from "next/cache";
 
 export async function DeleteProduct(productId: number) {
