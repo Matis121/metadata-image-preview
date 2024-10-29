@@ -18,5 +18,5 @@ export default function SignOutButton() {
     }
   };
 
-  return <Button onClick={() => handleSignOutClick()}>Sign out</Button>;
+  return <Button onClick={() => handleSignOutClick()}>Log out</Button>;
 }

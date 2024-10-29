@@ -10,29 +10,29 @@ export default function LoginForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [error, setError] = useState("");
 
-  const ProductSchema = z.object({
+  const UserSchema = z.object({
     email: z.string().email(),
     password: z.string(),
   });
 
   const handleSubmitForm = async (formData: FormData) => {
-    const loginUser = {
+    const userData = {
       email: formData.get("email") as string,
       password: formData.get("password") as string,
     };
-    const result = ProductSchema.safeParse(loginUser);
+    const result = UserSchema.safeParse(userData);
     if (!result.success) {
       setError("Invalid email or password");
       return;
     }
 
-    const checkout = await signIn.email({
-      email: loginUser.email,
-      password: loginUser.password,
+    const logIn = await signIn.email({
+      email: userData.email,
+      password: userData.password,
       callbackURL: "/",
     });
-    if (checkout.error) {
-      setError(`${checkout?.error.message}`);
+    if (logIn.error) {
+      setError(`${logIn?.error.message}`);
       return;
     }
     formRef.current?.reset();
@@ -56,7 +56,7 @@ export default function LoginForm() {
         </label>
         <Input type="password" name="password" id="password" />
       </div>
-      <SubmitButton />
+      <SubmitButton buttonValue="Log in" />
       <p className="mt-4 text-red-400 text-center">{error}</p>
     </form>
   );

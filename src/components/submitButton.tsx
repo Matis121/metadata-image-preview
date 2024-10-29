@@ -1,7 +1,11 @@
 import { useFormStatus } from "react-dom";
 import { Button } from "./ui/button";
 
-export default function SubmitButton() {
+export default function SubmitButton({
+  buttonValue = "Button value not definded",
+}: {
+  buttonValue: string;
+}) {
   const { pending } = useFormStatus();
 
   return (
@@ -28,7 +32,7 @@ export default function SubmitButton() {
           ></path>
         </svg>
       ) : (
-        "Login to account"
+        `${buttonValue}`
       )}
     </Button>
   );
