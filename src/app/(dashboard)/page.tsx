@@ -1,5 +1,5 @@
-import { ListOfProducts } from "./products/_components/listOfProducts";
-import { UserForm } from "./products/_components/userForm";
+import { ListOfProducts } from "@/app/products/_components/listOfProducts";
+import { UserForm } from "@/app/products/_components/userForm";
 
 export default async function Home() {
   return (

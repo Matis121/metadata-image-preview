@@ -6,6 +6,7 @@ import { signUp } from "@/lib/auth-client";
 export default async function Home() {
   return (
     <div className="w-full flex flex-col items-center gap-20">
+      <h2>Create an account</h2>
       <Button
         onClick={async () => {
           await signUp.email({
