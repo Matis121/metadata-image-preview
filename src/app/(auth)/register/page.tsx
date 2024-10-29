@@ -42,7 +42,7 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col items-center gap-8">
-      <h2>Register</h2>
+      <h1 className="mb-4 text-xl text-neutral-800">Register</h1>
       <form
         ref={formRef}
         className="flex flex-col gap-4 max-w-[280px] w-full"
