@@ -13,6 +13,9 @@ export const images = pgTable("images", {
   description: varchar({ length: 1500 }).notNull(),
   productUrl: varchar({ length: 2048 }).notNull(),
   imagePath: varchar({ length: 2048 }).notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id),
 });
 
 export const user = pgTable("user", {
