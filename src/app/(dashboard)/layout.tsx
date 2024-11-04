@@ -1,10 +1,11 @@
 import SignOutButton from "@/components/signOutButton";
+import { ProductForm } from "@/app/products/_components/productForm";
 import { Toaster } from "react-hot-toast";
 
-function TopNav() {
+function Navigation() {
   return (
-    <nav className="flex items-center justify-between py-3 text-xl font-semibold border-b px-4 md:px-16 lg:px-24 bg-white shadow-sm">
-      <a className="font-bold uppercase" href="/">
+    <nav className="h-[100vh] w-[300px] flex flex-col justify-between p-3 text-xl font-semibold bg-white dark:bg-neutral-950 shadow-sm border-r dark:border-neutral-600">
+      <a className="font-bold uppercase dark:text-neutral-200" href="/">
         Fitsy
       </a>
       <div>
@@ -21,9 +22,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="w-full flex flex-col gap-8 mb-8 bg-neutral-100">
-        <TopNav />
-        <div className="px-4 md:px-16 lg:px-24">{children}</div>
+      <body className="w-full flex bg-neutral-50 dark:bg-neutral-950">
+        <Navigation />
+        <div className="px-6 py-3">
+          <div className="flex flex-col gap-6">
+            <div className="flex w-full justify-end">
+              <ProductForm />
+            </div>
+            <div>{children}</div>
+          </div>
+        </div>
         <Toaster position="top-center" />
       </body>
     </html>

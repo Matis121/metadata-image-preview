@@ -1,4 +1,5 @@
 "use client";
+import { LuLogOut } from "react-icons/lu";
 
 import { signOut } from "@/lib/auth-client";
 import { Button } from "./ui/button";
@@ -18,5 +19,14 @@ export default function SignOutButton() {
     }
   };
 
-  return <Button onClick={() => handleSignOutClick()}>Log out</Button>;
+  return (
+    <Button
+      className="dark:text-neutral-200"
+      variant={"ghost"}
+      onClick={() => handleSignOutClick()}
+    >
+      <LuLogOut />
+      Log out
+    </Button>
+  );
 }

@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/lib/theme-provider";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -11,5 +12,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <html lang="en">{children}</html>;
+  return (
+    <html lang="en">
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </ThemeProvider>
+    </html>
+  );
 }

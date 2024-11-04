@@ -18,7 +18,7 @@ export async function ListOfProducts() {
     .where(eq(images.userId, session.user.id));
 
   return (
-    <div className="w-full grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+    <div className="w-full grid grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5">
       {userImages.map((singleImage: any) => (
         <div key={singleImage.id}>
           <SingleProduct singleImage={singleImage} />

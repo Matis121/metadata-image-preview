@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AddProduct } from "../actions/addProduct";
@@ -38,11 +46,11 @@ function SubmitButton() {
       ) : (
         <LuPlus />
       )}
-      Add product
+      Create product
     </Button>
   );
 }
-export function UserForm() {
+export function ProductForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const ProductSchema = z.object({
@@ -64,20 +72,33 @@ export function UserForm() {
   };
 
   return (
-    <div className="py-6 px-16 flex items-center justify-center bg-white rounded-xl border shadow-sm">
-      <form
-        ref={formRef}
-        className="flex flex-col justify-center items-center gap-4 w-[320px] md:w-[550px] md:flex-row"
-        action={handleSumbit}
-      >
-        <Input
-          name="url"
-          type="text"
-          placeholder="Paste your url to add new product..."
-          required
-        />
-        <SubmitButton />
-      </form>
-    </div>
+    <Dialog>
+      <DialogTrigger>
+        <Button className="secondary">
+          <LuPlus />
+          Add product
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add your new product</DialogTitle>
+          <DialogDescription>
+            <form
+              ref={formRef}
+              className="flex flex-col justify-center items-end gap-4 w-full mt-8"
+              action={handleSumbit}
+            >
+              <Input
+                name="url"
+                type="text"
+                placeholder="Paste your url to add new product..."
+                required
+              />
+              <SubmitButton />
+            </form>
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }
