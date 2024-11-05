@@ -10,7 +10,7 @@ export function SingleProduct({ singleImage }: { singleImage: any }) {
 
   const handleDelete = async () => {
     setIsDeleting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
     await DeleteProduct(singleImage.id);
     setIsDeleting(false);
   };
@@ -19,7 +19,7 @@ export function SingleProduct({ singleImage }: { singleImage: any }) {
     if (singleImage.imagePath !== undefined) {
       return (
         <div
-          className={`relative flex flex-col justify-center rounded-lg h-[200px] md:h-[300px] lg:h-[400px] break-words border overflow-hidden ${isDeleting && "opacity-70"}`}
+          className={`relative flex flex-col justify-center rounded-md h-[300px] break-words border dark:border-neutral-600 overflow-hidden ${isDeleting && "opacity-70"}`}
         >
           {isDeleting ? (
             <span className="absolute flex top-2 right-2 p-2 bg-neutral-800 text-white shadow-md rounded-full hover:bg-neutral-700 transition-all">
@@ -65,10 +65,14 @@ export function SingleProduct({ singleImage }: { singleImage: any }) {
               src={singleImage.imagePath}
             />
           </a>
-          <div className="bg-white absolute bottom-0 p-4 w-full border-t dark:bg-neutral-900">
-            <p className="text-neutral-800 dark:text-neutral-300">
+          <div className="bg-white absolute bottom-0 px-3 py-2 w-full h-[90px] border-t flex flex-col gap-2 dark:bg-neutral-800">
+            <p className="text-neutral-800 dark:text-neutral-300 text-[15px] font-semibold">
               {singleImage.title}
             </p>
+            <div className="flex justify-between dark:text-neutral-400 text-sm">
+              <p>Website: xyz.pl</p>
+              <p>11:52</p>
+            </div>
           </div>
         </div>
       );
