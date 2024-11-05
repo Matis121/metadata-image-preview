@@ -73,8 +73,8 @@ export function ProductForm() {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button className="secondary">
+      <DialogTrigger asChild>
+        <Button>
           <LuPlus />
           Add product
         </Button>

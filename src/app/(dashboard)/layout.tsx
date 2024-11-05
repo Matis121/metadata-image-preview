@@ -1,6 +1,4 @@
 import SignOutButton from "@/components/signOutButton";
-import { LuFolder } from "react-icons/lu";
-import { LuFolderCog } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
 import { LuGlobe2 } from "react-icons/lu";
 import { LuShapes } from "react-icons/lu";
@@ -9,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 
 function Navigation() {
   return (
-    <nav className="sticky top-0 h-[100vh] w-[300px] flex flex-col gap-4 py-3 text-xl font-semibold bg-white dark:bg-neutral-900 shadow-sm border-r dark:border-neutral-600">
+    <nav className="sticky top-0 h-[100vh] w-[380px] flex flex-col gap-4 py-3 text-xl font-semibold bg-white dark:bg-neutral-900 shadow-sm border-r dark:border-neutral-600">
       <a className="font-bold dark:text-neutral-300 px-4" href="/">
         QuickLinks
       </a>
@@ -61,9 +59,9 @@ export default function RootLayout({
     <html lang="en">
       <body className="w-full flex bg-neutral-50 dark:bg-neutral-800">
         <Navigation />
-        <div className="px-6 py-3 w-full">
+        <div className="py-3 w-full">
           <div className="flex flex-col gap-6">
-            <div className="flex w-full justify-end">
+            <div className="flex w-full justify-end px-4">
               <ProductForm />
             </div>
             <div>{children}</div>

@@ -22,7 +22,7 @@ export default function SignOutButton() {
   return (
     <Button
       className="dark:text-neutral-200"
-      variant={"ghost"}
+      variant={"link"}
       onClick={() => handleSignOutClick()}
     >
       <LuLogOut />
