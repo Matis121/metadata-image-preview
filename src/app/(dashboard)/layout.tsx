@@ -2,7 +2,7 @@ import SignOutButton from "@/components/signOutButton";
 import { LuTrash2 } from "react-icons/lu";
 import { LuGlobe2 } from "react-icons/lu";
 import { LuShapes } from "react-icons/lu";
-import { ProductForm } from "@/app/products/_components/productForm";
+import { ProductForm } from "@/components/products/productForm";
 import { Toaster } from "react-hot-toast";
 
 function Navigation() {
@@ -23,7 +23,7 @@ function Navigation() {
           <span>38</span>
         </a>
         <a
-          href=""
+          href="/unsorted"
           className="dark:text-neutral-300 text-[15px] font-normal flex justify-between px-4 py-1 hover:dark:bg-neutral-800"
         >
           <div className="flex gap-2 items-center">
@@ -33,7 +33,7 @@ function Navigation() {
           <span>7</span>
         </a>
         <a
-          href=""
+          href="/trash"
           className="dark:text-neutral-300 text-[15px] font-normal flex justify-between px-4 py-1 hover:dark:bg-neutral-800"
         >
           <div className="flex gap-2 items-center">

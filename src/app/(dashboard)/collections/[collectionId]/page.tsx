@@ -1,6 +1,6 @@
-import { ListOfProducts } from "@/app/products/_components/listOfProducts";
+import { ListOfProducts } from "@/components/products/listOfProducts";
 
-export default async function Home({
+export default function Home({
   params,
 }: {
   params: {

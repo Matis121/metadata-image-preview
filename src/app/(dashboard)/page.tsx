@@ -1,7 +1,7 @@
-import { ListOfProducts } from "@/app/products/_components/listOfProducts";
+import ListOfProducts from "@/components/products/listOfProducts";
 import CollectionHeader from "@/components/collectionHeader";
 
-export default async function Home() {
+export default function Home() {
   return (
     <div className="w-full flex flex-col gap-4">
       <CollectionHeader headerName="All bookmarks" />

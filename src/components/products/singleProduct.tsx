@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { LuX } from "react-icons/lu";
 import { useState } from "react";
-import { DeleteProduct } from "../actions/deleteProduct";
+import { DeleteProduct } from "../../server/actions/deleteProduct";
 
 export function SingleProduct({ singleImage }: { singleImage: any }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -19,7 +19,7 @@ export function SingleProduct({ singleImage }: { singleImage: any }) {
     if (singleImage.imagePath !== undefined) {
       return (
         <div
-          className={`relative flex flex-col justify-center rounded-md aspect-square break-words border dark:border-neutral-600 overflow-hidden ${isDeleting && "opacity-70"}`}
+          className={`relative flex flex-col justify-center rounded-md aspect-square break-words border dark:border-neutral-600 overflow-hidden ${isDeleting && "opacity-70"} hover:contrast-75`}
         >
           {isDeleting ? (
             <span className="absolute flex top-2 right-2 p-2 bg-neutral-800 text-white shadow-md rounded-full hover:bg-neutral-700 transition-all">
@@ -66,7 +66,7 @@ export function SingleProduct({ singleImage }: { singleImage: any }) {
             />
           </a>
           <div className="bg-white absolute bottom-0 px-3 py-2 w-full border-t flex flex-col gap-2 dark:bg-neutral-800">
-            <p className="text-neutral-800 dark:text-neutral-300 text-[15px] font-semibold line-clamp-2">
+            <p className="text-neutral-800 dark:text-neutral-200 text-[15px] font-semibold line-clamp-2">
               {singleImage.title}
             </p>
             <div className="flex justify-between dark:text-neutral-400 text-sm">

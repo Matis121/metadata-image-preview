@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AddProduct } from "../actions/addProduct";
+import { AddProduct } from "../../server/actions/addProduct";
 import { LuPlus } from "react-icons/lu";
 import { useFormStatus } from "react-dom";
 import { useRef } from "react";
