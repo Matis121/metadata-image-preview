@@ -5,18 +5,8 @@ import {
   timestamp,
   boolean,
   varchar,
+  jsonb,
 } from "drizzle-orm/pg-core";
-
-export const images = pgTable("images", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  title: varchar({ length: 600 }).notNull(),
-  description: varchar({ length: 1500 }).notNull(),
-  productUrl: varchar({ length: 2048 }).notNull(),
-  imagePath: varchar({ length: 2048 }).notNull(),
-  userId: text("userId")
-    .notNull()
-    .references(() => user.id),
-});
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -28,6 +18,29 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updatedAt").notNull(),
 });
 
+export const collection = pgTable("collection", {
+  id: text("id").primaryKey(),
+  userId: text("userId").references(() => user.id),
+  title: text("title").notNull(),
+  description: text("description"),
+  createdAt: timestamp("createdAt").notNull(),
+  updatedAt: timestamp("updatedAt").notNull(),
+});
+
+export const product = pgTable("product", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  collectionId: text("collectionId").references(() => collection.id),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id),
+  inTrash: boolean("inTrash").default(false),
+  title: varchar({ length: 600 }).notNull(),
+  description: varchar({ length: 1500 }).notNull(),
+  productUrl: varchar({ length: 2048 }).notNull(),
+  imagePath: varchar({ length: 2048 }).notNull(),
+});
+
+// Better-auth schemas
 export const session = pgTable("session", {
   id: text("id").primaryKey(),
   expiresAt: timestamp("expiresAt").notNull(),

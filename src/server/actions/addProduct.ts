@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { db } from "@/drizzle";
-import { images } from "@/drizzle/schema";
+import { product } from "@/drizzle/schema";
 import { ScrapeMetaData } from "@/utils/scrapeMetaData";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -13,7 +13,7 @@ export async function AddProduct(imageUrl: string) {
     headers: await headers(),
   });
   try {
-    const newImage: typeof images.$inferInsert = {
+    const newImage: typeof product.$inferInsert = {
       title: metaData.title,
       description: metaData.description,
       productUrl: metaData.url,
@@ -21,7 +21,7 @@ export async function AddProduct(imageUrl: string) {
       userId: session?.user.id,
     };
 
-    await db.insert(images).values(newImage);
+    await db.insert(product).values(newImage);
     revalidatePath("/");
     return { success: "Product has been added" };
   } catch (error) {

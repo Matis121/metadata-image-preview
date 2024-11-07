@@ -1,5 +1,5 @@
 import { db } from "../../drizzle";
-import { images } from "../../drizzle/schema";
+import { product } from "../../drizzle/schema";
 import { SingleProduct } from "./singleProduct";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -14,8 +14,8 @@ export default async function ListOfProducts() {
   }
   const userImages = await db
     .select()
-    .from(images)
-    .where(eq(images.userId, session.user.id));
+    .from(product)
+    .where(eq(product.userId, session.user.id));
 
   return (
     <section className="flex flex-col gap-6">
