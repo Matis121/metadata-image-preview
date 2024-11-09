@@ -3,7 +3,7 @@ import { product } from "../../drizzle/schema";
 import { SingleProduct } from "./singleProduct";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export default async function ListOfProducts() {
   const session = await auth.api.getSession({

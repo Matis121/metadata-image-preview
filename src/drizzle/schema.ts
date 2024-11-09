@@ -5,7 +5,6 @@ import {
   timestamp,
   boolean,
   varchar,
-  jsonb,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -19,17 +18,17 @@ export const user = pgTable("user", {
 });
 
 export const collection = pgTable("collection", {
-  id: text("id").primaryKey(),
-  userId: text("userId").references(() => user.id),
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id),
   title: text("title").notNull(),
   description: text("description"),
-  createdAt: timestamp("createdAt").notNull(),
-  updatedAt: timestamp("updatedAt").notNull(),
 });
 
 export const product = pgTable("product", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  collectionId: text("collectionId").references(() => collection.id),
+  collectionId: integer("collectionId").references(() => collection.id),
   userId: text("userId")
     .notNull()
     .references(() => user.id),
