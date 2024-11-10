@@ -1,6 +1,7 @@
 import { getCollections } from "@/server/actions/collections";
-import AddCollectionButton from "./addCollectionButton";
+import AddCollectionButton from "../collections/collectionButton";
 import { LuFolder } from "react-icons/lu";
+import SingleCollection from "./singleCollection";
 
 export default async function Collections() {
   const { collections }: any = await getCollections();
@@ -13,13 +14,7 @@ export default async function Collections() {
       <div className="flex flex-col text-white w-full">
         {collections && collections.length > 0 ? (
           collections.map((element: any) => (
-            <div
-              className="cursor-pointer px-4 py-1 dark:text-neutral-300 text-[15px] flex items-center gap-2 hover:dark:bg-neutral-800"
-              key={element.id}
-            >
-              <LuFolder />
-              {element.title}
-            </div>
+            <SingleCollection id={element.id} title={element.title} />
           ))
         ) : (
           <p>No collections found.</p>
