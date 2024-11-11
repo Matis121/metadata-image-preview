@@ -1,5 +1,5 @@
 import { getCollections } from "@/server/actions/collections";
-import AddCollectionButton from "../collections/collectionButton";
+import AddCollectionButton from "../collections/collectionForm";
 import { LuFolder } from "react-icons/lu";
 import SingleCollection from "./singleCollection";
 
@@ -14,7 +14,11 @@ export default async function Collections() {
       <div className="flex flex-col text-white w-full">
         {collections && collections.length > 0 ? (
           collections.map((element: any) => (
-            <SingleCollection id={element.id} title={element.title} />
+            <SingleCollection
+              id={element.id}
+              title={element.title}
+              key={element.id}
+            />
           ))
         ) : (
           <p>No collections found.</p>

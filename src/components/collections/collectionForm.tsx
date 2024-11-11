@@ -16,7 +16,7 @@ import SubmitButton from "../submitButton";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
-export default function AddCollectionButton() {
+export default function CollectionForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [openDialog, setOpenDialog] = useState(false);
 
