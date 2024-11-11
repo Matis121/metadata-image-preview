@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AddProduct } from "../../server/actions/addProduct";
+import { addProduct } from "../../server/actions/products";
 import { LuPlus } from "react-icons/lu";
 import { useFormStatus } from "react-dom";
 import { useRef } from "react";
@@ -67,7 +67,7 @@ export function ProductForm() {
       return;
     }
 
-    await AddProduct(newProduct.productUrl);
+    await addProduct(newProduct.productUrl);
     formRef.current?.reset();
   };
 

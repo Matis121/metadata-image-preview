@@ -1,6 +1,5 @@
 import { getCollections } from "@/server/actions/collections";
 import AddCollectionButton from "../collections/collectionForm";
-import { LuFolder } from "react-icons/lu";
 import SingleCollection from "./singleCollection";
 
 export default async function Collections() {

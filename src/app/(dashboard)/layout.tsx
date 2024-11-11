@@ -1,6 +1,5 @@
 import { ProductForm } from "@/components/products/productForm";
 import { Toaster } from "react-hot-toast";
-import { getCollections } from "@/server/actions/collections";
 import Navigation from "@/components/sidebar/navigation";
 
 export default async function RootLayout({
@@ -8,7 +7,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const allCollections = await getCollections();
   return (
     <html lang="en">
       <body className="w-full flex bg-neutral-50 dark:bg-neutral-800">

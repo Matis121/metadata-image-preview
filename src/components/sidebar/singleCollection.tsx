@@ -4,11 +4,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { deleteCollection } from "@/server/actions/collections";
 import { LuFolder } from "react-icons/lu";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { Button } from "../ui/button";

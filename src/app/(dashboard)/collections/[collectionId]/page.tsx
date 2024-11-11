@@ -1,5 +1,5 @@
 import CollectionHeader from "@/components/collectionHeader";
-import ListOfProducts from "@/components/products/listOfProducts";
+import ListOfProducts from "@/components/products/list/ProductsList";
 import { getProductsFromCollection } from "@/server/actions/products";
 
 export default async function Home({
