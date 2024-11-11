@@ -1,10 +1,16 @@
-import { ListOfProducts } from "@/components/products/listOfProducts";
+import ListOfProducts from "@/components/products/listOfProducts";
+import CollectionHeader from "@/components/collectionHeader";
+import { getProductUnsorted } from "@/server/actions/products";
 
-export default function Home() {
+export default async function Home() {
+  const { products }: any = await getProductUnsorted();
+
   return (
-    <div className="w-full flex flex-col items-center gap-20">
-      <p>unsorted</p>
-      <ListOfProducts />
+    <div className="w-full flex flex-col gap-4">
+      <CollectionHeader headerName="Unsorted" />
+      <div className="px-4">
+        <ListOfProducts products={products} />
+      </div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { LuTrash2 } from "react-icons/lu";
 import { LuGlobe2 } from "react-icons/lu";
 import { LuShapes } from "react-icons/lu";
 import Collections from "./collections";
+import Link from "next/link";
 
 export default function Navigation() {
   return (
@@ -11,8 +12,8 @@ export default function Navigation() {
         QuickLinks
       </a>
       <div className="flex flex-col">
-        <a
-          href=""
+        <Link
+          href="/"
           className="dark:text-neutral-300 text-[15px] flex justify-between px-4 py-1 hover:dark:bg-neutral-800"
         >
           <div className="flex gap-2 items-center">
@@ -20,8 +21,8 @@ export default function Navigation() {
             <p>All bookmarks</p>
           </div>
           <span className="font-normal">38</span>
-        </a>
-        <a
+        </Link>
+        <Link
           href="/unsorted"
           className="dark:text-neutral-300 text-[15px] flex justify-between px-4 py-1 hover:dark:bg-neutral-800"
         >
@@ -30,8 +31,8 @@ export default function Navigation() {
             <p>Unsorted</p>
           </div>
           <span className="font-normal">7</span>
-        </a>
-        <a
+        </Link>
+        <Link
           href="/trash"
           className="dark:text-neutral-300 text-[15px] flex justify-between px-4 py-1 hover:dark:bg-neutral-800"
         >
@@ -40,7 +41,7 @@ export default function Navigation() {
             <p>Trash</p>
           </div>
           <span className="font-normal">21</span>
-        </a>
+        </Link>
       </div>
       <div className="flex flex-col">
         <Collections />

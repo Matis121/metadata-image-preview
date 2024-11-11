@@ -3,29 +3,18 @@ import { product } from "../../drizzle/schema";
 import { SingleProduct } from "./singleProduct";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
-export default async function ListOfProducts() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  if (!session) {
-    return console.log("session not found");
-  }
-  const userImages = await db
-    .select()
-    .from(product)
-    .where(eq(product.userId, session.user.id));
-
+export default async function ListOfProducts({ products }) {
   return (
     <section className="flex flex-col gap-6">
       <div className="w-full grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
-        {userImages.map((singleImage: any) => (
+        {products?.map((singleImage: any) => (
           <SingleProduct singleImage={singleImage} key={singleImage.id} />
         ))}
       </div>
       <div className="flex items-center justify-center text-neutral-400">
-        <p>{userImages?.length} bookmarks</p>
+        <p>{products?.length} bookmarks</p>
       </div>
     </section>
   );

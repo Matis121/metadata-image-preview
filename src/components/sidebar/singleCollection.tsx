@@ -14,6 +14,7 @@ import { LuMoreHorizontal } from "react-icons/lu";
 import { Button } from "../ui/button";
 import CollectionDeleteForm from "../collections/collectionDeleteForm";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function SingleCollection({
   id,
@@ -31,7 +32,8 @@ export default function SingleCollection({
         setOpen={setOpenDeleteForm}
         collectionId={id}
       />
-      <div
+      <Link
+        href={`/collections/${id}`}
         className="cursor-pointer px-4 py-1 dark:text-neutral-300 text-[15px] flex items-center justify-between hover:dark:bg-neutral-800"
         key={id}
       >
@@ -54,7 +56,7 @@ export default function SingleCollection({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-      </div>
+      </Link>
     </>
   );
 }
