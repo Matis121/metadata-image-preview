@@ -19,7 +19,7 @@ export default function Navigation() {
             <LuGlobe2 size={18} />
             <p>All bookmarks</p>
           </div>
-          <span>38</span>
+          <span className="font-normal">38</span>
         </a>
         <a
           href="/unsorted"
@@ -29,7 +29,7 @@ export default function Navigation() {
             <LuShapes size={18} />
             <p>Unsorted</p>
           </div>
-          <span>7</span>
+          <span className="font-normal">7</span>
         </a>
         <a
           href="/trash"
@@ -39,7 +39,7 @@ export default function Navigation() {
             <LuTrash2 size={18} />
             <p>Trash</p>
           </div>
-          <span>21</span>
+          <span className="font-normal">21</span>
         </a>
       </div>
       <div className="flex flex-col">
