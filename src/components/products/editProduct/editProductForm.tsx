@@ -12,41 +12,56 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function EditProductForm({ open, setOpen, productData }: any) {
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { updateProduct } from "@/server/actions/products";
+
+export default function EditProductForm({
+  open,
+  setOpen,
+  productData,
+  collections,
+}: any) {
+  const handleSubmit = async (formData: FormData) => {
+    const collectionId = formData.get("collection");
+    console.log(productData.id, collectionId);
+
+    await updateProduct(productData.id, collectionId);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          <DialogTitle>Edit product</DialogTitle>
+          <DialogDescription>Change your collection</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="title" className="text-right">
-              Title
-            </Label>
-            <Input
-              id="title"
-              className="col-span-3"
-              value={productData?.title}
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">
-              Description
-            </Label>
-            <Input
-              id="description"
-              className="col-span-3"
-              value={productData?.description}
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
+        <form action={handleSubmit}>
+          <Select name="collection">
+            <SelectTrigger>
+              <SelectValue placeholder="Select a collection" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {collections?.map((element) => (
+                  <SelectItem key={element.id} value={element.id}>
+                    {element.title}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <DialogFooter>
+            <Button>Save changes</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

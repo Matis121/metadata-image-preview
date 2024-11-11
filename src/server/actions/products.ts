@@ -109,3 +109,18 @@ export async function addProduct(imageUrl: string) {
     return { error: "Error while adding product" };
   }
 }
+
+export async function updateProduct(productId: string, collectionId: string) {
+  const { session } = await userSession();
+  if (!session) {
+    return console.log("session not found");
+  }
+
+  await db
+    .update(product)
+    .set({ collectionId: collectionId })
+    .where(eq(product.id, productId));
+
+  revalidatePath("/");
+  return { success: "Product has been updated" };
+}

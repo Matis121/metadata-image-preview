@@ -10,8 +10,10 @@ import Link from "next/link";
 
 export default function SingleProduct({
   singleProduct,
+  collections,
 }: {
   singleProduct: any;
+  collections: any;
 }) {
   const [isDeletingProduct, setIsDeletingProduct] = useState(false);
   const [openEditProdudct, setOpenEditProduct] = useState(false);
@@ -28,6 +30,7 @@ export default function SingleProduct({
         open={openEditProdudct}
         setOpen={setOpenEditProduct}
         productData={singleProduct}
+        collections={collections}
       />
       {singleProduct.imagePath !== undefined ? (
         <div
