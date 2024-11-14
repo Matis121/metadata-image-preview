@@ -9,13 +9,12 @@ export default async function Home({
     collectionId: string;
   };
 }) {
-  const { products }: any = await getProductsFromCollection(
-    params.collectionId
-  );
+  const { collectionId } = await params;
+  const { products }: any = await getProductsFromCollection(collectionId);
 
   return (
     <div className="w-full flex flex-col gap-4">
-      <CollectionHeader headerName={`Collection ${params.collectionId}`} />
+      <CollectionHeader headerName={`Collection ${collectionId}`} />
       <div className="px-4">
         <ListOfProducts products={products} />
       </div>
