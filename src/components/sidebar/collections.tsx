@@ -11,17 +11,15 @@ export default async function Collections() {
         <button>Collections</button>
       </span>
       <div className="flex flex-col text-white w-full">
-        {collections && collections.length > 0 ? (
+        {collections &&
+          collections.length > 0 &&
           collections.map((element: any) => (
             <SingleCollection
               id={element.id}
               title={element.title}
               key={element.id}
             />
-          ))
-        ) : (
-          <p>No collections found.</p>
-        )}
+          ))}
       </div>
       <AddCollectionButton />
     </div>
