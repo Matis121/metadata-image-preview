@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LuFolder } from "react-icons/lu";
 import { LuMoreHorizontal } from "react-icons/lu";
-import { Button } from "../ui/button";
 import CollectionDeleteForm from "../collections/collectionDeleteForm";
 import { useState } from "react";
 import Link from "next/link";
@@ -38,21 +37,17 @@ export default function SingleCollection({
           <LuFolder />
           {title}
         </div>
-        <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="ghost">
-                <LuMoreHorizontal />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>Rename</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setOpenDeleteForm(true)}>
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <LuMoreHorizontal />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>Rename</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setOpenDeleteForm(true)}>
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </Link>
     </>
   );
