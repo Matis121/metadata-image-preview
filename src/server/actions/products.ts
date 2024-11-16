@@ -22,7 +22,6 @@ export async function getProducts() {
 }
 
 export async function getProductsFromCollection(collectionId: any) {
-  console.log(collectionId);
   const { session } = await userSession();
   if (!session) {
     return console.log("session not found");

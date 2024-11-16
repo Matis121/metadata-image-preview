@@ -29,8 +29,6 @@ export default function CollectionForm() {
       name: formData.get("name") as string,
     };
 
-    console.log(newCollection.name);
-
     const result = CollectionSchema.safeParse(newCollection);
     if (!result.success) {
       toast.error("Try again!");
@@ -53,16 +51,14 @@ export default function CollectionForm() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New collection</DialogTitle>
-          <DialogDescription>
-            <form
-              ref={formRef}
-              className="flex flex-col justify-center items-end gap-4 w-full mt-8"
-              action={handleSubmit}
-            >
-              <Input name="name" type="text" required />
-              <SubmitButton buttonValue="Add new" />
-            </form>
-          </DialogDescription>
+          <form
+            ref={formRef}
+            className="flex flex-col justify-center items-end gap-4 w-full mt-8"
+            action={handleSubmit}
+          >
+            <Input name="name" type="text" required />
+            <SubmitButton buttonValue="Add new" />
+          </form>
         </DialogHeader>
       </DialogContent>
     </Dialog>

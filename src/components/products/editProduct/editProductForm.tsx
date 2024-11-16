@@ -31,8 +31,6 @@ export default function EditProductForm({
 }: any) {
   const handleSubmit = async (formData: FormData) => {
     const collectionId = formData.get("collection");
-    console.log(productData.id, collectionId);
-
     await updateProduct(productData.id, collectionId);
   };
 

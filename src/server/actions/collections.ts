@@ -18,6 +18,23 @@ export async function getCollections() {
   return { collections };
 }
 
+export async function getSingleCollection(collectionId: number) {
+  const { session } = await userSession();
+  if (!session) {
+    return console.log("session not found");
+  }
+  const singleCollection = await db
+    .select()
+    .from(collection)
+    .where(
+      and(
+        eq(collection.userId, session?.user.id),
+        eq(collection.id, collectionId)
+      )
+    );
+  return { singleCollection: singleCollection[0] };
+}
+
 export async function addCollection(collectionName: string) {
   const { session } = await userSession();
   if (!session) {

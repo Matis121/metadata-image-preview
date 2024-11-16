@@ -8,7 +8,7 @@ export default async function Collections() {
   return (
     <div className="flex flex-col items-start w-full">
       <span className="px-4 py-1 dark:text-neutral-500 text-sm font-normal">
-        <button>Collections</button>
+        Collections
       </span>
       <div className="flex flex-col text-white w-full">
         {collections &&
