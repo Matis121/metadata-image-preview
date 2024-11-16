@@ -82,21 +82,19 @@ export function ProductForm() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add your new product</DialogTitle>
-          <DialogDescription>
-            <form
-              ref={formRef}
-              className="flex flex-col justify-center items-end gap-4 w-full mt-8"
-              action={handleSumbit}
-            >
-              <Input
-                name="url"
-                type="text"
-                placeholder="Paste your url to add new product..."
-                required
-              />
-              <SubmitButton />
-            </form>
-          </DialogDescription>
+          <form
+            ref={formRef}
+            className="flex flex-col justify-center items-end gap-4 w-full mt-8"
+            action={handleSumbit}
+          >
+            <Input
+              name="url"
+              type="text"
+              placeholder="Paste your url to add new product..."
+              required
+            />
+            <SubmitButton />
+          </form>
         </DialogHeader>
       </DialogContent>
     </Dialog>
