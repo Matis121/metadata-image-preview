@@ -84,7 +84,7 @@ export async function deleteProduct(productId: number) {
   try {
     await db
       .update(product)
-      .set({ inTrash: true })
+      .set({ inTrash: true, collectionId: null })
       .where(eq(product.id, productId));
     revalidatePath("/");
     console.log("siema");
@@ -118,16 +118,26 @@ export async function addProduct(imageUrl: string) {
   }
 }
 
-export async function updateProduct(productId: string, collectionId: string) {
+export async function updateProductCollection(
+  productId: string,
+  collectionId: string
+) {
   const { session } = await userSession();
   if (!session) {
     return console.log("session not found");
   }
 
-  await db
-    .update(product)
-    .set({ collectionId: collectionId })
-    .where(eq(product.id, productId));
+  if (collectionId === "unsorted") {
+    await db
+      .update(product)
+      .set({ collectionId: null, inTrash: false })
+      .where(eq(product.id, productId));
+  } else {
+    await db
+      .update(product)
+      .set({ collectionId: collectionId, inTrash: false })
+      .where(eq(product.id, productId));
+  }
 
   revalidatePath("/");
   return { success: "Product has been updated" };

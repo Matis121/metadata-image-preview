@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { db } from "@/drizzle";
-import { collection } from "@/drizzle/schema";
+import { collection, product } from "@/drizzle/schema";
 import { and, eq } from "drizzle-orm";
 import userSession from "../db/userSession";
 
@@ -56,17 +56,26 @@ export async function deleteCollection(collectionId: any) {
   }
 
   try {
-    await db
-      .delete(collection)
-      .where(
-        and(
-          eq(collection.id, collectionId),
-          eq(collection.userId, session.user.id)
-        )
-      );
+    await db.transaction(async (trx) => {
+      await trx
+        .update(product)
+        .set({ collectionId: null })
+        .where(eq(product.collectionId, collectionId));
+
+      await trx
+        .delete(collection)
+        .where(
+          and(
+            eq(collection.id, collectionId),
+            eq(collection.userId, session.user.id)
+          )
+        );
+    });
 
     revalidatePath("/");
-    return { success: "Collection has been deleted" };
+    return {
+      success: "Collection has been deleted and associated products updated",
+    };
   } catch (error) {
     console.error("Error while deleting collection:", error);
     return { error: "Error while deleting collection" };

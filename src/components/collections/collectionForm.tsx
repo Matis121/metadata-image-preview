@@ -43,10 +43,10 @@ export default function CollectionForm() {
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger asChild>
-        <Button>
+        <div className="text-neutral-300 flex items-center gap-1 px-4 mt-1 hover:cursor-pointer">
           <LuPlus size={18} />
-          Add new collection
-        </Button>
+          <p className="text-sm font-normal">New collection</p>
+        </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

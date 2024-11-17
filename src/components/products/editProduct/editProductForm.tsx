@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { updateProduct } from "@/server/actions/products";
+import { updateProductCollection } from "@/server/actions/products";
 
 export default function EditProductForm({
   open,
@@ -31,7 +31,7 @@ export default function EditProductForm({
 }: any) {
   const handleSubmit = async (formData: FormData) => {
     const collectionId = formData.get("collection");
-    await updateProduct(productData.id, collectionId);
+    await updateProductCollection(productData.id, collectionId);
   };
 
   return (
@@ -48,8 +48,14 @@ export default function EditProductForm({
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
+                <SelectItem value="unsorted">Unsorted</SelectItem>
+              </SelectGroup>
+              <SelectGroup>
+                {collections.length > 0 && (
+                  <SelectLabel>Collections</SelectLabel>
+                )}
                 {collections?.map((element) => (
-                  <SelectItem key={element.id} value={element.id}>
+                  <SelectItem key={element.id} value={element.id.toString()}>
                     {element.title}
                   </SelectItem>
                 ))}

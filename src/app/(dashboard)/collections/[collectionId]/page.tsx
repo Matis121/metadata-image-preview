@@ -14,11 +14,10 @@ export default async function Home({
   const { singleCollection }: any = await getSingleCollection(collectionId);
   const { products }: any = await getProductsFromCollection(collectionId);
 
-
   return (
     <div className="w-full flex flex-col gap-4">
       <CollectionHeader
-        headerName={`Collection ${singleCollection !== undefined ? singleCollection.title : ""}`}
+        headerName={`${singleCollection !== undefined ? singleCollection.title : ""}`}
       />
       <div className="px-4">
         <ListOfProducts products={products} />
