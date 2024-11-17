@@ -21,7 +21,7 @@ export default function MainSection() {
           <Link
             key={idx}
             href={link.href}
-            className={`dark:text-neutral-300 text-[15px] flex justify-between px-4 py-1 hover:dark:bg-neutral-800 ${isActive && "dark:bg-neutral-800"}`}
+            className={`dark:text-neutral-300 text-sm font-normal flex justify-between px-4 py-2 hover:dark:bg-neutral-800 ${isActive && "dark:bg-neutral-800"}`}
           >
             <div className="flex gap-2 items-center">
               {link.icon}
