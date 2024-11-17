@@ -3,7 +3,7 @@
 import { db } from "@/drizzle";
 import { product } from "@/drizzle/schema";
 import userSession from "../db/userSession";
-import { eq, and } from "drizzle-orm";
+import { eq, and, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { ScrapeMetaData } from "@/utils/scrapeMetaData";
 import { auth } from "@/lib/auth";
@@ -14,10 +14,14 @@ export async function getProducts() {
   if (!session) {
     return console.log("session not found");
   }
+
   const products = await db
     .select()
     .from(product)
-    .where(eq(product.userId, session.user.id));
+    .where(
+      and(eq(product.userId, session.user.id), eq(product.inTrash, false))
+    );
+
   return { products };
 }
 
@@ -64,7 +68,7 @@ export async function getProductUnsorted() {
     .where(
       and(
         eq(product.userId, session.user.id),
-        eq(product.collectionId, null),
+        isNull(product.collectionId),
         eq(product.inTrash, false)
       )
     );
@@ -78,10 +82,15 @@ export async function deleteProduct(productId: number) {
     return console.log("session not found");
   }
   try {
-    await db.delete(product).where(eq(product.id, productId));
+    await db
+      .update(product)
+      .set({ inTrash: true })
+      .where(eq(product.id, productId));
     revalidatePath("/");
+    console.log("siema");
     return { success: "Product has been deleted" };
   } catch (error) {
+    console.log("siema");
     return { error: "Error while deleting product" };
   }
 }

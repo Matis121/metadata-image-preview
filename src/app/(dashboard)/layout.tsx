@@ -1,6 +1,6 @@
 import { ProductForm } from "@/components/products/productForm";
 import { Toaster } from "react-hot-toast";
-import Navigation from "@/components/sidebar/navigation";
+import Navigation from "@/components/sidebar/sidebar";
 
 export default async function RootLayout({
   children,
