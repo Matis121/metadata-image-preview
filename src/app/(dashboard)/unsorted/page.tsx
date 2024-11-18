@@ -1,4 +1,4 @@
-import ListOfProducts from "@/components/products/list/ProductsList";
+import ListOfProducts from "@/components/products/list/listOfProducts";
 import CollectionHeader from "@/components/collectionHeader";
 import { getProductUnsorted } from "@/server/actions/products";
 

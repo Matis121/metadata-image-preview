@@ -1,5 +1,5 @@
 import CollectionHeader from "@/components/collectionHeader";
-import ListOfProducts from "@/components/products/list/ProductsList";
+import ListOfProducts from "@/components/products/list/listOfProducts";
 import { getSingleCollection } from "@/server/actions/collections";
 import { getProductsFromCollection } from "@/server/actions/products";
 

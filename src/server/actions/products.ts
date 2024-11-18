@@ -81,16 +81,32 @@ export async function deleteProduct(productId: number) {
   if (!session) {
     return console.log("session not found");
   }
+
   try {
-    await db
-      .update(product)
-      .set({ inTrash: true, collectionId: null })
+    const existingProducts = await db
+      .select()
+      .from(product)
       .where(eq(product.id, productId));
-    revalidatePath("/");
-    console.log("siema");
-    return { success: "Product has been deleted" };
+
+    const existingProduct = existingProducts[0];
+
+    if (!existingProduct) {
+      return { error: "Product not found" };
+    }
+
+    if (existingProduct.inTrash) {
+      await db.delete(product).where(eq(product.id, productId));
+      revalidatePath("/");
+      return { success: "Product has been permanently deleted" };
+    } else {
+      await db
+        .update(product)
+        .set({ inTrash: true, collectionId: null })
+        .where(eq(product.id, productId));
+      revalidatePath("/");
+      return { success: "Product has been moved to trash" };
+    }
   } catch (error) {
-    console.log("siema");
     return { error: "Error while deleting product" };
   }
 }
