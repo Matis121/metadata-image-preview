@@ -1,6 +1,6 @@
 import SignOutButton from "@/components/signOutButton";
 import Collections from "./collections";
-import MainSection from "./mainSection";
+import Defaults from "./defaults";
 import Link from "next/link";
 import { LuGlobe2 } from "react-icons/lu";
 
@@ -11,16 +11,7 @@ export default function Navigation() {
         QuickLinks
       </a>
       <div>
-        <Link
-          href="/"
-          className={`dark:text-neutral-300 text-sm font-normal flex justify-between px-4 py-2 hover:dark:bg-neutral-800 `}
-        >
-          <div className="flex gap-2 items-center">
-            <LuGlobe2 size={18} />
-            <p>All bookmarks</p>
-          </div>
-        </Link>
-        <MainSection />
+        <Defaults />
       </div>
       <Collections />
       <div className="mt-auto">

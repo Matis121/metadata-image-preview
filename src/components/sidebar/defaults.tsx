@@ -6,8 +6,9 @@ import { LuTrash2 } from "react-icons/lu";
 import { LuGlobe2 } from "react-icons/lu";
 import { LuShapes } from "react-icons/lu";
 
-export default function MainSection() {
+export default function Defaults() {
   const navLinks = [
+    { name: "All bookmarks", href: "/", icon: <LuGlobe2 size={18} /> },
     { name: "Unsorted", href: "/unsorted", icon: <LuShapes size={18} /> },
     { name: "Trash", href: "/trash", icon: <LuTrash2 size={18} /> },
   ];
@@ -16,7 +17,10 @@ export default function MainSection() {
   return (
     <div className="flex flex-col">
       {navLinks.map((link, idx) => {
-        const isActive = pathname.startsWith(link.href);
+        const isActive =
+          link.href === "/"
+            ? pathname === link.href
+            : pathname.startsWith(link.href);
         return (
           <Link
             key={idx}
