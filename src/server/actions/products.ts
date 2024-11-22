@@ -111,7 +111,10 @@ export async function deleteProduct(productId: number) {
   }
 }
 
-export async function addProduct(imageUrl: string) {
+export async function addProduct(
+  imageUrl: string,
+  collectionId: number | undefined
+) {
   const { session } = await userSession();
   if (!session) {
     return console.log("session not found");
@@ -124,6 +127,7 @@ export async function addProduct(imageUrl: string) {
       productUrl: metaData.url,
       imagePath: metaData.images[0],
       userId: session?.user.id,
+      ...(collectionId && { collectionId }),
     };
 
     await db.insert(product).values(newImage);

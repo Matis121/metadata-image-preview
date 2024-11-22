@@ -1,5 +1,6 @@
 import CollectionHeader from "@/components/collectionHeader";
 import ListOfProducts from "@/components/products/list/listOfProducts";
+import { ProductForm } from "@/components/products/productForm";
 import { getSingleCollection } from "@/server/actions/collections";
 import { getProductsFromCollection } from "@/server/actions/products";
 
@@ -16,6 +17,7 @@ export default async function Home({
 
   return (
     <div className="w-full flex flex-col gap-4">
+      <ProductForm collectionId={collectionId} />
       <CollectionHeader
         headerName={`${singleCollection !== undefined ? singleCollection.title : ""}`}
       />

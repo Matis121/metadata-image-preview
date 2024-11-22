@@ -12,12 +12,7 @@ export default async function RootLayout({
       <Toaster position="top-center" />
       <Navigation />
       <div className="py-3 w-full">
-        <div className="flex flex-col gap-6">
-          <div className="flex w-full justify-end px-4">
-            <ProductForm />
-          </div>
-          <div>{children}</div>
-        </div>
+        <div className="flex flex-col gap-6">{children}</div>
       </div>
     </div>
   );

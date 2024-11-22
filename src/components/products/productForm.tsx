@@ -50,7 +50,7 @@ function SubmitButton() {
     </Button>
   );
 }
-export function ProductForm() {
+export function ProductForm({ collectionId }: { collectionId?: number }) {
   const formRef = useRef<HTMLFormElement>(null);
 
   const ProductSchema = z.object({
@@ -67,36 +67,38 @@ export function ProductForm() {
       return;
     }
 
-    await addProduct(newProduct.productUrl);
+    await addProduct(newProduct.productUrl, collectionId);
     formRef.current?.reset();
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>
-          <LuPlus />
-          Add product
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add your new product</DialogTitle>
-          <form
-            ref={formRef}
-            className="flex flex-col justify-center items-end gap-4 w-full mt-8"
-            action={handleSumbit}
-          >
-            <Input
-              name="url"
-              type="text"
-              placeholder="Paste your url to add new product..."
-              required
-            />
-            <SubmitButton />
-          </form>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+    <div className="flex w-full justify-end px-4">
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button>
+            <LuPlus />
+            Add product
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add your new product</DialogTitle>
+            <form
+              ref={formRef}
+              className="flex flex-col justify-center items-end gap-4 w-full mt-8"
+              action={handleSumbit}
+            >
+              <Input
+                name="url"
+                type="text"
+                placeholder="Paste your url to add new product..."
+                required
+              />
+              <SubmitButton />
+            </form>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
