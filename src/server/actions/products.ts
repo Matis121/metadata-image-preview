@@ -6,74 +6,92 @@ import userSession from "../db/userSession";
 import { eq, and, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { ScrapeMetaData } from "@/utils/scrapeMetaData";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 
 export async function getProducts() {
   const { session } = await userSession();
   if (!session) {
-    return console.log("session not found");
+    console.log("session not found");
+    return { products: [] };
   }
-
-  const products = await db
-    .select()
-    .from(product)
-    .where(
-      and(eq(product.userId, session.user.id), eq(product.inTrash, false))
-    );
-
-  return { products };
+  try {
+    const products = await db
+      .select()
+      .from(product)
+      .where(
+        and(eq(product.userId, session.user.id), eq(product.inTrash, false))
+      );
+    return { products };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { products: [] }; // Return an empty array in case of error
+  }
 }
 
 export async function getProductsFromCollection(collectionId: any) {
   const { session } = await userSession();
   if (!session) {
-    return console.log("session not found");
+    console.log("session not found");
+    return { products: [] };
   }
-  const products = await db
-    .select()
-    .from(product)
-    .where(
-      and(
-        eq(product.userId, session.user.id),
-        eq(product.collectionId, collectionId)
-      )
-    );
-  return { products };
+  try {
+    const products = await db
+      .select()
+      .from(product)
+      .where(
+        and(
+          eq(product.userId, session.user.id),
+          eq(product.collectionId, collectionId)
+        )
+      );
+    return { products };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { products: [] };
+  }
 }
 
 export async function getProductsInTrash() {
   const { session } = await userSession();
   if (!session) {
-    return console.log("session not found");
+    console.log("session not found");
+    return { products: [] };
   }
-
-  const products = await db
-    .select()
-    .from(product)
-    .where(and(eq(product.userId, session.user.id), eq(product.inTrash, true)));
-
-  return { products };
+  try {
+    const products = await db
+      .select()
+      .from(product)
+      .where(
+        and(eq(product.userId, session.user.id), eq(product.inTrash, true))
+      );
+    return { products };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { products: [] };
+  }
 }
 
 export async function getProductUnsorted() {
   const { session } = await userSession();
   if (!session) {
-    return console.log("session not found");
+    console.log("session not found");
+    return { products: [] };
   }
-
-  const products = await db
-    .select()
-    .from(product)
-    .where(
-      and(
-        eq(product.userId, session.user.id),
-        isNull(product.collectionId),
-        eq(product.inTrash, false)
-      )
-    );
-
-  return { products };
+  try {
+    const products = await db
+      .select()
+      .from(product)
+      .where(
+        and(
+          eq(product.userId, session.user.id),
+          isNull(product.collectionId),
+          eq(product.inTrash, false)
+        )
+      );
+    return { products };
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return { products: [] };
+  }
 }
 
 export async function deleteProduct(productId: number) {
@@ -81,7 +99,6 @@ export async function deleteProduct(productId: number) {
   if (!session) {
     return console.log("session not found");
   }
-
   try {
     const existingProducts = await db
       .select()
@@ -89,11 +106,9 @@ export async function deleteProduct(productId: number) {
       .where(eq(product.id, productId));
 
     const existingProduct = existingProducts[0];
-
     if (!existingProduct) {
       return { error: "Product not found" };
     }
-
     if (existingProduct.inTrash) {
       await db.delete(product).where(eq(product.id, productId));
       revalidatePath("/");
@@ -146,7 +161,6 @@ export async function updateProductCollection(
   if (!session) {
     return console.log("session not found");
   }
-
   if (collectionId === "unsorted") {
     await db
       .update(product)

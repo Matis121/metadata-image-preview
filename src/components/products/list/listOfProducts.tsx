@@ -1,7 +1,13 @@
 import { getCollections } from "@/server/actions/collections";
 import SingleProduct from "./singleProduct";
 
-export default async function ListOfProducts({ products }) {
+export default async function ListOfProducts({
+  products,
+  showCollection,
+}: {
+  products: Array<T>;
+  showCollection?: boolean;
+}) {
   const { collections }: any = await getCollections();
 
   return (
@@ -12,6 +18,7 @@ export default async function ListOfProducts({ products }) {
             collections={collections}
             singleProduct={singleProduct}
             key={singleProduct.id}
+            showCollection={showCollection}
           />
         ))}
       </div>

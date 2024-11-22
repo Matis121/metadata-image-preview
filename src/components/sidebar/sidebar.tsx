@@ -1,8 +1,6 @@
 import SignOutButton from "@/components/signOutButton";
 import Collections from "./collections";
 import Defaults from "./defaults";
-import Link from "next/link";
-import { LuGlobe2 } from "react-icons/lu";
 
 export default function Navigation() {
   return (

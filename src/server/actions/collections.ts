@@ -9,13 +9,19 @@ import userSession from "../db/userSession";
 export async function getCollections() {
   const { session } = await userSession();
   if (!session) {
-    return console.log("session not found");
+    console.log("Session not found");
+    return { collections: [] };
   }
-  const collections = await db
-    .select()
-    .from(collection)
-    .where(eq(collection.userId, session?.user.id));
-  return { collections };
+  try {
+    const collections = await db
+      .select()
+      .from(collection)
+      .where(eq(collection.userId, session.user.id));
+    return { collections };
+  } catch (error) {
+    console.error("Error fetching collections:", error);
+    return { collections: [] };
+  }
 }
 
 export async function getSingleCollection(collectionId: number) {

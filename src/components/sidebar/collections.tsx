@@ -11,8 +11,7 @@ export default async function Collections() {
         Collections
       </span>
       <div className="flex flex-col text-white w-full">
-        {collections &&
-          collections.length > 0 &&
+        {collections?.length > 0 &&
           collections.map((element: any) => (
             <SingleCollection
               id={element.id}

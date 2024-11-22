@@ -11,7 +11,7 @@ export default async function Home() {
       <ProductForm />
       <CollectionHeader headerName="All bookmarks" />
       <div className="px-4">
-        <ListOfProducts products={products} />
+        <ListOfProducts products={products} showCollection={true} />
       </div>
     </div>
   );

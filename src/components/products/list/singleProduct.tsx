@@ -11,9 +11,11 @@ import Link from "next/link";
 export default function SingleProduct({
   singleProduct,
   collections,
+  showCollection,
 }: {
   singleProduct: any;
   collections: any;
+  showCollection?: boolean;
 }) {
   const [isDeletingProduct, setIsDeletingProduct] = useState(false);
   const [openEditProdudct, setOpenEditProduct] = useState(false);
@@ -23,6 +25,8 @@ export default function SingleProduct({
     await deleteProduct(singleProduct.id);
     setIsDeletingProduct(false);
   };
+
+  console.log(collections);
 
   return (
     <div>
@@ -88,9 +92,8 @@ export default function SingleProduct({
           <p className="text-neutral-800 dark:text-neutral-200 text-[15px] font-semibold line-clamp-2">
             {singleProduct.title}
           </p>
-          <div className="flex justify-between dark:text-neutral-400 text-sm">
-            <p>Website: xyz.pl</p>
-            <p>11:52</p>
+          <div className="flex dark:text-neutral-400 text-sm">
+            {showCollection && <p>Collection: {singleProduct.collectionId}</p>}
           </div>
         </div>
       </div>
