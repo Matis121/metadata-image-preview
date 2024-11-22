@@ -45,8 +45,15 @@ export default function SingleCollection({
             <LuMoreHorizontal />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>Rename</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setOpenDeleteForm(true)}>
+            <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
+              Rename
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenDeleteForm(true);
+              }}
+            >
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
