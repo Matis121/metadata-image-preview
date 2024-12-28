@@ -12,6 +12,7 @@ import CollectionDeleteForm from "../collections/collectionDeleteForm";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import CollectionEditForm from "../collections/collectionEditForm";
 
 export default function SingleCollection({
   id,
@@ -21,6 +22,7 @@ export default function SingleCollection({
   title: string;
 }) {
   const [openDeleteForm, setOpenDeleteForm] = useState(false);
+  const [openEditForm, setOpenEditForm] = useState(false);
   const pathName = usePathname();
   const isActive = pathName.startsWith("/collections/" + id);
 
@@ -31,6 +33,13 @@ export default function SingleCollection({
         setOpen={setOpenDeleteForm}
         collectionId={id}
       />
+      <CollectionEditForm
+        open={openEditForm}
+        setOpen={setOpenEditForm}
+        collectionId={id}
+        collectionTitle={title}
+      />
+
       <Link
         href={`/collections/${id}`}
         className={`cursor-pointer px-4 py-2 dark:text-neutral-300 text-sm font-normal flex items-center justify-between hover:dark:bg-neutral-900 ${isActive && "dark:bg-neutral-900"}`}
@@ -45,7 +54,12 @@ export default function SingleCollection({
             <LuMoreHorizontal />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenEditForm(true);
+              }}
+            >
               Rename
             </DropdownMenuItem>
             <DropdownMenuItem

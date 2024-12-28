@@ -5,12 +5,10 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 import {
   Select,
@@ -23,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { updateProduct } from "@/server/actions/products";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function EditProductForm({
   open,
@@ -37,10 +35,6 @@ export default function EditProductForm({
     description: productData.description,
     collectionId: productData.collectionId,
   });
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const handleSubmit = async () => {
     await updateProduct(productData.id, data);
@@ -128,7 +122,7 @@ export default function EditProductForm({
                   {collections.length > 0 && (
                     <SelectLabel>Collections</SelectLabel>
                   )}
-                  {collections?.map((element) => (
+                  {collections?.map((element: Product) => (
                     <SelectItem key={element.id} value={element.id.toString()}>
                       {element.title}
                     </SelectItem>

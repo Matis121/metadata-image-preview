@@ -1,5 +1,5 @@
 import { getCollections } from "@/server/actions/collections";
-import AddCollectionButton from "../collections/collectionForm";
+import CollectionForm from "../collections/collectionForm";
 import SingleCollection from "./singleCollection";
 
 export default async function Collections() {
@@ -20,7 +20,7 @@ export default async function Collections() {
             />
           ))}
       </div>
-      <AddCollectionButton />
+      <CollectionForm />
     </div>
   );
 }

@@ -54,6 +54,23 @@ export async function addCollection(collectionName: string) {
   revalidatePath("/");
   return { success: "Product has been added" };
 }
+export async function editCollection(
+  collectionId: number,
+  collectionName: string
+) {
+  const { session } = await userSession();
+  if (!session) {
+    return console.log("session not found");
+  }
+
+  await db
+    .update(collection)
+    .set({ title: collectionName })
+    .where(eq(collection.id, collectionId));
+
+  revalidatePath("/");
+  return { success: "Collection has been updated" };
+}
 
 export async function deleteCollection(collectionId: any) {
   const { session } = await userSession();

@@ -1,11 +1,11 @@
 import { getCollections } from "@/server/actions/collections";
-import SingleProduct from "./singleProduct";
+import SingleProduct from "../singleProduct/singleProduct";
 
 export default async function ListOfProducts({
   products,
   showCollection,
 }: {
-  products: Array<T>;
+  products: Array<Product>;
   showCollection?: boolean;
 }) {
   const { collections }: any = await getCollections();
