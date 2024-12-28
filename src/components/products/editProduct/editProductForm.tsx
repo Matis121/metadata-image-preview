@@ -38,6 +38,7 @@ export default function EditProductForm({
 
   const handleSubmit = async () => {
     await updateProduct(productData.id, data);
+    setOpen(false);
   };
 
   return (

@@ -1,6 +1,7 @@
 import { getSingleCollection } from "@/server/actions/collections";
 import Image from "next/image";
 import Link from "next/link";
+import { LuFolder } from "react-icons/lu";
 
 export default async function productInformations({
   singleProduct,
@@ -34,7 +35,17 @@ export default async function productInformations({
           {singleProduct.title}
         </p>
         <div className="flex dark:text-neutral-400 text-sm">
-          {showCollection && <p>Collection: {singleCollection.title}</p>}
+          {showCollection &&
+            (singleCollection?.title === undefined ? (
+              <p className="px-2 rounded-md bg-yellow-100 text-neutral-600">
+                Unsorted
+              </p>
+            ) : (
+              <div className="flex items-center gap-2 py-1">
+                <LuFolder />
+                <p>{singleCollection?.title}</p>
+              </div>
+            ))}
         </div>
       </div>
     </div>

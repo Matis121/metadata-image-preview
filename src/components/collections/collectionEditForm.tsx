@@ -58,7 +58,7 @@ export default function CollectionEditForm({
               defaultValue={collectionTitle}
               required
             />
-            <SubmitButton buttonValue="Add new" />
+            <SubmitButton buttonValue="Confirm" />
           </form>
         </DialogHeader>
       </DialogContent>
