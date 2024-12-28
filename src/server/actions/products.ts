@@ -153,23 +153,32 @@ export async function addProduct(
   }
 }
 
-export async function updateProductCollection(
-  productId: string,
-  collectionId: string
-) {
+export async function updateProduct(productId: number, newProductData: any) {
   const { session } = await userSession();
   if (!session) {
     return console.log("session not found");
   }
-  if (collectionId === "unsorted") {
+  if (newProductData.collectionId === "unsorted") {
     await db
       .update(product)
-      .set({ collectionId: null, inTrash: false })
+      .set({
+        collectionId: null,
+        inTrash: false,
+        title: newProductData.title,
+        description: newProductData.description,
+        imagePath: newProductData.image,
+      })
       .where(eq(product.id, productId));
   } else {
     await db
       .update(product)
-      .set({ collectionId: collectionId, inTrash: false })
+      .set({
+        collectionId: newProductData.collectionId,
+        inTrash: false,
+        title: newProductData.title,
+        description: newProductData.description,
+        imagePath: newProductData.image,
+      })
       .where(eq(product.id, productId));
   }
 

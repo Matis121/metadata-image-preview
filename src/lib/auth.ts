@@ -3,6 +3,10 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/drizzle";
 
 export const auth = betterAuth({
+  session: {
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24, // 1 day (every 1 day the session expiration is updated)
+  },
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
