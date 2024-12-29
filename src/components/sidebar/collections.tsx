@@ -7,9 +7,12 @@ export default async function Collections() {
 
   return (
     <div className="flex flex-col items-start w-full">
-      <span className="px-4 py-1 dark:text-neutral-500 text-sm font-normal">
-        Collections
-      </span>
+      <div className="flex justify-between w-full mb-1">
+        <span className="px-4 py-1 dark:text-neutral-500 text-sm font-normal">
+          Collections
+        </span>
+        <CollectionForm />
+      </div>
       <div className="flex flex-col text-white w-full">
         {collections?.length > 0 &&
           collections.map((element: any) => (
@@ -20,7 +23,6 @@ export default async function Collections() {
             />
           ))}
       </div>
-      <CollectionForm />
     </div>
   );
 }

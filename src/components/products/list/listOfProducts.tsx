@@ -1,5 +1,6 @@
 import { getCollections } from "@/server/actions/collections";
 import SingleProduct from "../singleProduct/singleProduct";
+import { getTags } from "@/server/actions/tags";
 
 export default async function ListOfProducts({
   products,
@@ -9,6 +10,7 @@ export default async function ListOfProducts({
   showCollection?: boolean;
 }) {
   const { collections }: any = await getCollections();
+  const { tags } = await getTags();
 
   return (
     <section className="flex flex-col gap-6">
@@ -16,6 +18,7 @@ export default async function ListOfProducts({
         {products?.map((singleProduct: any) => (
           <SingleProduct
             collections={collections}
+            tags={tags}
             singleProduct={singleProduct}
             key={singleProduct.id}
             showCollection={showCollection}

@@ -13,8 +13,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import CollectionEditForm from "../collections/collectionEditForm";
+import TagDeleteForm from "../tags/tagDeleteForm";
+import TagEditForm from "../tags/tagEditForm";
 
-export default function SingleCollection({
+export default function SingleTag({
   id,
   title,
 }: {
@@ -24,31 +26,30 @@ export default function SingleCollection({
   const [openDeleteForm, setOpenDeleteForm] = useState(false);
   const [openEditForm, setOpenEditForm] = useState(false);
   const pathName = usePathname();
-  const isActive = pathName.startsWith("/collections/" + id);
+  const isActive = pathName.startsWith("/tags/" + id);
 
   return (
     <>
-      <CollectionDeleteForm
-        open={openDeleteForm}
-        setOpen={setOpenDeleteForm}
-        collectionId={id}
-      />
-      <CollectionEditForm
+      <TagEditForm
         open={openEditForm}
         setOpen={setOpenEditForm}
-        collectionId={id}
-        collectionTitle={title}
+        tagId={id}
+        tagTitle={title}
       />
-
+      <TagDeleteForm
+        open={openDeleteForm}
+        setOpen={setOpenDeleteForm}
+        tagId={id}
+      />
       <Link
-        href={`/collections/${id}`}
-        className={`group relative cursor-pointer px-4 py-1 dark:text-neutral-300 text-sm font-normal flex items-center justify-between hover:dark:bg-neutral-900 ${
+        href={`/tags/${id}`}
+        key={id}
+        className={`relative group cursor-pointer px-4 py-1 dark:text-neutral-300 text-sm font-normal flex items-center gap-2 hover:dark:bg-neutral-900 ${
           isActive && "dark:bg-neutral-900"
         }`}
-        key={id}
       >
-        <div className="flex items-center gap-2">
-          <LuFolder />
+        <div className="flex gap-2">
+          <span>#</span>
           {title}
         </div>
         <div className="invisible absolute right-4 top-1.5 group-hover:visible">

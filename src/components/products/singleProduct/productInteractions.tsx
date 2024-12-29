@@ -9,9 +9,13 @@ import SpinnerAnimation from "@/components/spinnerAnimation";
 export default function ProductInteractions({
   singleProduct,
   collections,
+  tags,
+  productTags,
 }: {
   singleProduct: any;
   collections: any;
+  tags: any;
+  productTags: any;
 }) {
   const [isDeletingProduct, setIsDeletingProduct] = useState(false);
   const [openEditProdudct, setOpenEditProduct] = useState(false);
@@ -29,6 +33,8 @@ export default function ProductInteractions({
         setOpen={setOpenEditProduct}
         productData={singleProduct}
         collections={collections}
+        tags={tags}
+        productTags={productTags}
       />
       <div
         className={`absolute top-0 right-0 ${isDeletingProduct && "opacity-70"}`}

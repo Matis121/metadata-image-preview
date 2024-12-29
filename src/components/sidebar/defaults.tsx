@@ -25,7 +25,7 @@ export default function Defaults() {
           <Link
             key={idx}
             href={link.href}
-            className={`dark:text-neutral-300 text-sm font-normal flex justify-between px-4 py-2 hover:dark:bg-neutral-900 ${isActive && "dark:bg-neutral-900"}`}
+            className={`dark:text-neutral-300 text-sm font-normal flex justify-between px-4 py-1 hover:dark:bg-neutral-900 ${isActive && "dark:bg-neutral-900"}`}
           >
             <div className="flex gap-2 items-center">
               {link.icon}

@@ -15,8 +15,9 @@ import { Input } from "../ui/input";
 import SubmitButton from "../submitButton";
 import toast from "react-hot-toast";
 import { z } from "zod";
+import { addTag } from "@/server/actions/tags";
 
-export default function CollectionForm() {
+export default function TagForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -25,17 +26,17 @@ export default function CollectionForm() {
   });
 
   const handleSubmit = async (formData: FormData) => {
-    const newCollection = {
+    const newTag = {
       name: formData.get("name") as string,
     };
 
-    const result = CollectionSchema.safeParse(newCollection);
+    const result = CollectionSchema.safeParse(newTag);
     if (!result.success) {
       toast.error("Try again!");
       return;
     }
 
-    await addCollection(newCollection.name);
+    await addTag(newTag.name);
     formRef.current?.reset();
     setOpenDialog(false);
   };
@@ -49,14 +50,14 @@ export default function CollectionForm() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New collection</DialogTitle>
+          <DialogTitle>Create new tag</DialogTitle>
           <form
             ref={formRef}
             className="flex flex-col justify-center items-end gap-4 w-full mt-8"
             action={handleSubmit}
           >
             <Input name="name" type="text" required />
-            <SubmitButton buttonValue="Add new" />
+            <SubmitButton buttonValue="Confirm" />
           </form>
         </DialogHeader>
       </DialogContent>

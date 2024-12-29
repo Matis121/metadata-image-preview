@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { updateProduct } from "@/server/actions/products";
+import { addTagsToProduct } from "@/server/actions/tags";
 import { useState } from "react";
 
 export default function EditProductForm({
@@ -28,6 +29,8 @@ export default function EditProductForm({
   setOpen,
   productData,
   collections,
+  tags,
+  productTags,
 }: any) {
   const [data, setData] = useState({
     image: productData.imagePath,
@@ -35,9 +38,11 @@ export default function EditProductForm({
     description: productData.description,
     collectionId: productData.collectionId,
   });
+  const [productTagId, setProductTagId] = useState(productTags.tagId);
 
   const handleSubmit = async () => {
     await updateProduct(productData.id, data);
+    await addTagsToProduct(productData.id, [parseFloat(productTagId)]);
     setOpen(false);
   };
 
@@ -105,6 +110,7 @@ export default function EditProductForm({
             </label>
             <Select
               name="collection"
+              value={data.collectionId?.toString()}
               onValueChange={(value) =>
                 setData((prevData) => ({
                   ...prevData,
@@ -126,6 +132,29 @@ export default function EditProductForm({
                   {collections?.map((element: Product) => (
                     <SelectItem key={element.id} value={element.id.toString()}>
                       {element.title}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <label className="text-neutral-700 text-sm" htmlFor="tag">
+              Tags
+            </label>
+            <Select
+              name="tag"
+              value={productTagId?.toString()}
+              onValueChange={(value) => setProductTagId(value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Add tags" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {tags?.map((tag) => (
+                    <SelectItem key={tag.id} value={tag.id.toString()}>
+                      {tag.name}
                     </SelectItem>
                   ))}
                 </SelectGroup>

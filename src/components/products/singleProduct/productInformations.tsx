@@ -6,13 +6,22 @@ import { LuFolder } from "react-icons/lu";
 export default async function productInformations({
   singleProduct,
   showCollection,
+  tags,
+  productTags,
 }: {
   singleProduct: any;
   showCollection?: boolean;
+  tags: any;
+  productTags: any;
 }) {
   const { singleCollection }: any = await getSingleCollection(
     singleProduct.collectionId
   );
+
+  const getTagName = (id) => {
+    const filteredTag = tags.find((tag) => tag.id === id);
+    return filteredTag ? filteredTag.name : null;
+  };
 
   return (
     <div className="relative flex flex-col justify-center rounded-md aspect-square break-words border dark:border-neutral-600 overflow-hidden">
@@ -34,6 +43,17 @@ export default async function productInformations({
         <p className="text-neutral-800 dark:text-neutral-200 text-[15px] font-semibold line-clamp-2">
           {singleProduct.title}
         </p>
+        <div>
+          {productTags && (
+            <div className="flex flex-wrap gap-x-2">
+              {productTags.map((tag) => (
+                <p key={tag.id} className="text-sm text-yellow-200 font-light">
+                  #{getTagName(tag.tagId)}
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
         <div className="flex dark:text-neutral-400 text-sm">
           {showCollection &&
             (singleCollection?.title === undefined ? (
