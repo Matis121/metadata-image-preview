@@ -2,25 +2,21 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { LuPlus } from "react-icons/lu";
-import { addCollection } from "@/server/actions/collections";
-import { Button } from "../ui/button";
 import { useRef, useState } from "react";
 import { Input } from "../ui/input";
 import SubmitButton from "../submitButton";
 import toast from "react-hot-toast";
 import { z } from "zod";
-import { addTag } from "@/server/actions/tags";
+import { createTag } from "@/server/actions/tags";
 
 export default function TagForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [openDialog, setOpenDialog] = useState(false);
-
   const CollectionSchema = z.object({
     name: z.string(),
   });
@@ -29,14 +25,12 @@ export default function TagForm() {
     const newTag = {
       name: formData.get("name") as string,
     };
-
     const result = CollectionSchema.safeParse(newTag);
     if (!result.success) {
       toast.error("Try again!");
       return;
     }
-
-    await addTag(newTag.name);
+    await createTag(newTag.name);
     formRef.current?.reset();
     setOpenDialog(false);
   };

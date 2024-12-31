@@ -2,22 +2,30 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { editCollection } from "@/server/actions/collections";
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { Input } from "../ui/input";
 import SubmitButton from "../submitButton";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import { editTag } from "@/server/actions/tags";
 
-export default function TagEditForm({ open, setOpen, tagId, tagTitle }: any) {
-  const formRef = useRef<HTMLFormElement>(null);
+type TagEdit = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  tagId: number;
+  tagTitle: string;
+};
 
+export default function TagEditForm({
+  open,
+  setOpen,
+  tagId,
+  tagTitle,
+}: TagEdit) {
+  const formRef = useRef<HTMLFormElement>(null);
   const CollectionSchema = z.object({
     name: z.string(),
   });
@@ -26,13 +34,11 @@ export default function TagEditForm({ open, setOpen, tagId, tagTitle }: any) {
     const newTagName = {
       name: formData.get("name") as string,
     };
-
     const result = CollectionSchema.safeParse(newTagName);
     if (!result.success) {
       toast.error("Try again!");
       return;
     }
-
     await editTag(tagId, newTagName.name);
     formRef.current?.reset();
     setOpen(false);

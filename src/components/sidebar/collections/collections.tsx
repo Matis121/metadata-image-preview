@@ -1,9 +1,10 @@
 import { getCollections } from "@/server/actions/collections";
-import CollectionForm from "../collections/collectionForm";
+import CollectionForm from "../../collections/collectionForm";
 import SingleCollection from "./singleCollection";
+import { Collection } from "@/drizzle/schema";
 
 export default async function Collections() {
-  const { collections }: any = await getCollections();
+  const { collections } = await getCollections();
 
   return (
     <div className="flex flex-col items-start w-full">
@@ -15,11 +16,11 @@ export default async function Collections() {
       </div>
       <div className="flex flex-col text-white w-full">
         {collections?.length > 0 &&
-          collections.map((element: any) => (
+          collections.map((collection: Collection) => (
             <SingleCollection
-              id={element.id}
-              title={element.title}
-              key={element.id}
+              id={collection.id}
+              title={collection.title}
+              key={collection.id}
             />
           ))}
       </div>

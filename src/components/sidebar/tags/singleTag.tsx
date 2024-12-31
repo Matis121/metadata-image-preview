@@ -6,15 +6,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LuFolder } from "react-icons/lu";
 import { LuMoreHorizontal } from "react-icons/lu";
-import CollectionDeleteForm from "../collections/collectionDeleteForm";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import CollectionEditForm from "../collections/collectionEditForm";
-import TagDeleteForm from "../tags/tagDeleteForm";
-import TagEditForm from "../tags/tagEditForm";
+import TagDeleteForm from "../../tags/tagDeleteForm";
+import TagEditForm from "../../tags/tagEditForm";
 
 export default function SingleTag({
   id,

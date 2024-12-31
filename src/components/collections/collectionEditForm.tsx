@@ -2,24 +2,29 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { editCollection } from "@/server/actions/collections";
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef } from "react";
 import { Input } from "../ui/input";
 import SubmitButton from "../submitButton";
 import toast from "react-hot-toast";
 import { z } from "zod";
+
+type CollectionEdit = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  collectionId: number;
+  collectionTitle: string;
+};
 
 export default function CollectionEditForm({
   open,
   setOpen,
   collectionId,
   collectionTitle,
-}: any) {
+}: CollectionEdit) {
   const formRef = useRef<HTMLFormElement>(null);
 
   const CollectionSchema = z.object({

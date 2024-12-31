@@ -11,14 +11,14 @@ export default async function Tags({
   };
 }) {
   const { tagId } = await params;
-  const { singleCollection }: any = await getSingleTag(tagId);
-  const { products }: any = await getProductsByTag(tagId);
+  const singleTag = await getSingleTag(tagId);
+  const { products } = await getProductsByTag(tagId);
 
   return (
     <div className="w-full flex flex-col gap-4">
       <ProductForm collectionId={tagId} />
       <CollectionHeader
-        headerName={`${singleCollection !== undefined ? singleCollection.name : ""}`}
+        headerName={`${singleTag !== undefined ? singleTag.name : ""}`}
       />
       <div className="px-4">
         <ListOfProducts products={products} />

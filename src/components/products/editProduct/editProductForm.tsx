@@ -20,9 +20,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Collection, Product, ProductTag, Tag } from "@/drizzle/schema";
 import { updateProduct } from "@/server/actions/products";
 import { addTagsToProduct } from "@/server/actions/tags";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+
+type EditProduct = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  productData: Product;
+  collections: Collection[];
+  tags: Tag[];
+  productTags: ProductTag[];
+};
 
 export default function EditProductForm({
   open,
@@ -31,18 +41,21 @@ export default function EditProductForm({
   collections,
   tags,
   productTags,
-}: any) {
-  const [data, setData] = useState({
-    image: productData.imagePath,
+}: EditProduct) {
+  const [data, setData] = useState<Partial<Product>>({
     title: productData.title,
     description: productData.description,
     collectionId: productData.collectionId,
+    imagePath: productData.imagePath,
   });
-  const [productTagId, setProductTagId] = useState(productTags.tagId);
+
+  const [productTagId, setProductTagId] = useState<number>();
 
   const handleSubmit = async () => {
-    await updateProduct(productData.id, data);
-    await addTagsToProduct(productData.id, [parseFloat(productTagId)]);
+    await updateProduct(productData.id, data as Product);
+    if (productTagId !== undefined) {
+      await addTagsToProduct(productData.id, [productTagId]);
+    }
     setOpen(false);
   };
 
@@ -62,11 +75,11 @@ export default function EditProductForm({
               type="text"
               name="image"
               id="image"
-              value={data.image}
+              value={data.imagePath}
               onChange={(e) =>
                 setData((prevItems) => ({
                   ...prevItems,
-                  image: e.target.value,
+                  imagePath: e.target.value,
                 }))
               }
             />
@@ -114,7 +127,7 @@ export default function EditProductForm({
               onValueChange={(value) =>
                 setData((prevData) => ({
                   ...prevData,
-                  collectionId: value,
+                  collectionId: parseFloat(value),
                 }))
               }
             >
@@ -123,15 +136,18 @@ export default function EditProductForm({
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="unsorted">Unsorted</SelectItem>
+                  <SelectItem value="0">Unsorted</SelectItem>
                 </SelectGroup>
                 <SelectGroup>
                   {collections.length > 0 && (
                     <SelectLabel>Collections</SelectLabel>
                   )}
-                  {collections?.map((element: Product) => (
-                    <SelectItem key={element.id} value={element.id.toString()}>
-                      {element.title}
+                  {collections?.map((collection: Collection) => (
+                    <SelectItem
+                      key={collection.id}
+                      value={collection.id.toString()}
+                    >
+                      {collection.title}
                     </SelectItem>
                   ))}
                 </SelectGroup>
@@ -144,15 +160,14 @@ export default function EditProductForm({
             </label>
             <Select
               name="tag"
-              value={productTagId?.toString()}
-              onValueChange={(value) => setProductTagId(value)}
+              onValueChange={(value) => setProductTagId(parseFloat(value))}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Add tags" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {tags?.map((tag) => (
+                  {tags?.map((tag: Tag) => (
                     <SelectItem key={tag.id} value={tag.id.toString()}>
                       {tag.name}
                     </SelectItem>

@@ -6,7 +6,7 @@ import { LuTrash2 } from "react-icons/lu";
 import { LuGlobe2 } from "react-icons/lu";
 import { LuShapes } from "react-icons/lu";
 
-export default function Defaults() {
+export default function DefaultBookmarks() {
   const navLinks = [
     { name: "All bookmarks", href: "/", icon: <LuGlobe2 size={18} /> },
     { name: "Unsorted", href: "/unsorted", icon: <LuShapes size={18} /> },

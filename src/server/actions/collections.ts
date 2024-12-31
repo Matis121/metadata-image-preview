@@ -38,7 +38,7 @@ export async function getSingleCollection(collectionId: number) {
         eq(collection.id, collectionId)
       )
     );
-  return { singleCollection: singleCollection[0] };
+  return singleCollection[0];
 }
 
 export async function addCollection(collectionName: string) {
@@ -72,7 +72,7 @@ export async function editCollection(
   return { success: "Collection has been updated" };
 }
 
-export async function deleteCollection(collectionId: any) {
+export async function deleteCollection(collectionId: number) {
   const { session } = await userSession();
   if (!session) {
     return console.log("session not found");

@@ -5,18 +5,21 @@ import { deleteProduct } from "../../../server/actions/products";
 import EditProductForm from "../editProduct/editProductForm";
 import { LuTrash2, LuPencil } from "react-icons/lu";
 import SpinnerAnimation from "@/components/spinnerAnimation";
+import { Collection, Product, ProductTag, Tag } from "@/drizzle/schema";
+
+type ProductInteractions = {
+  singleProduct: Product;
+  collections: Collection[];
+  tags: Tag[];
+  productTags: ProductTag[];
+};
 
 export default function ProductInteractions({
   singleProduct,
   collections,
   tags,
   productTags,
-}: {
-  singleProduct: any;
-  collections: any;
-  tags: any;
-  productTags: any;
-}) {
+}: ProductInteractions) {
   const [isDeletingProduct, setIsDeletingProduct] = useState(false);
   const [openEditProdudct, setOpenEditProduct] = useState(false);
 

@@ -93,3 +93,8 @@ export const verification = pgTable("verification", {
   value: text("value").notNull(),
   expiresAt: timestamp("expiresAt").notNull(),
 });
+
+export type Tag = typeof tag.$inferSelect;
+export type Product = typeof product.$inferSelect;
+export type ProductTag = typeof productTag.$inferSelect;
+export type Collection = typeof collection.$inferSelect;

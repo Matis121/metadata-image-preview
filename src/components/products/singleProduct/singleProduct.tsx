@@ -1,6 +1,7 @@
 import { getTagsInProduct } from "@/server/actions/tags";
 import ProductInformations from "./productInformations";
 import ProductInteractions from "./productInteractions";
+import { Collection, Product, Tag } from "@/drizzle/schema";
 
 export default async function SingleProduct({
   singleProduct,
@@ -8,12 +9,13 @@ export default async function SingleProduct({
   tags,
   showCollection,
 }: {
-  singleProduct: any;
-  collections: any;
-  tags: any;
+  singleProduct: Product;
+  collections: Collection[];
+  tags: Tag[];
   showCollection?: boolean;
 }) {
   const { productTags } = await getTagsInProduct(singleProduct.id);
+  console.log(productTags);
 
   return (
     <div className="relative">

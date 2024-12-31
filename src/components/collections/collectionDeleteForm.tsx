@@ -11,12 +11,19 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { deleteCollection } from "@/server/actions/collections";
+import { Dispatch, SetStateAction } from "react";
+
+type CollectionDelete = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  collectionId: number;
+};
 
 export default function CollectionDeleteForm({
   open,
   setOpen,
   collectionId,
-}: any) {
+}: CollectionDelete) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
@@ -24,7 +31,7 @@ export default function CollectionDeleteForm({
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            collection.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

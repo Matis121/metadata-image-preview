@@ -11,16 +11,22 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { deleteTag } from "@/server/actions/tags";
+import { Dispatch, SetStateAction } from "react";
 
-export default function TagDeleteForm({ open, setOpen, tagId }: any) {
+type TagDelete = {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  tagId: number;
+};
+
+export default function TagDeleteForm({ open, setOpen, tagId }: TagDelete) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            This action cannot be undone. This will permanently delete your tag.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

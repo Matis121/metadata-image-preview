@@ -1,25 +1,28 @@
+import { Product, ProductTag, Tag } from "@/drizzle/schema";
 import { getSingleCollection } from "@/server/actions/collections";
 import Image from "next/image";
 import Link from "next/link";
 import { LuFolder } from "react-icons/lu";
+
+type ProductInformations = {
+  singleProduct: Product;
+  showCollection?: boolean;
+  tags: Tag[];
+  productTags: ProductTag[];
+};
 
 export default async function productInformations({
   singleProduct,
   showCollection,
   tags,
   productTags,
-}: {
-  singleProduct: any;
-  showCollection?: boolean;
-  tags: any;
-  productTags: any;
-}) {
-  const { singleCollection }: any = await getSingleCollection(
-    singleProduct.collectionId
+}: ProductInformations) {
+  const singleCollection = await getSingleCollection(
+    singleProduct.collectionId ?? 0
   );
 
-  const getTagName = (id) => {
-    const filteredTag = tags.find((tag) => tag.id === id);
+  const getTagName = (id: number) => {
+    const filteredTag = tags.find((tag: Tag) => tag.id === id);
     return filteredTag ? filteredTag.name : null;
   };
 

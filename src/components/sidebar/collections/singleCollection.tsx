@@ -8,17 +8,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LuFolder } from "react-icons/lu";
 import { LuMoreHorizontal } from "react-icons/lu";
-import CollectionDeleteForm from "../collections/collectionDeleteForm";
+import CollectionDeleteForm from "../../collections/collectionDeleteForm";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import CollectionEditForm from "../collections/collectionEditForm";
+import CollectionEditForm from "../../collections/collectionEditForm";
 
 export default function SingleCollection({
   id,
   title,
 }: {
-  id: string;
+  id: number;
   title: string;
 }) {
   const [openDeleteForm, setOpenDeleteForm] = useState(false);

@@ -2,14 +2,12 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { LuPlus } from "react-icons/lu";
 import { addCollection } from "@/server/actions/collections";
-import { Button } from "../ui/button";
 import { useRef, useState } from "react";
 import { Input } from "../ui/input";
 import SubmitButton from "../submitButton";

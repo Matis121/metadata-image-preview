@@ -12,8 +12,8 @@ export default async function Home({
   };
 }) {
   const { collectionId } = await params;
-  const { singleCollection }: any = await getSingleCollection(collectionId);
-  const { products }: any = await getProductsFromCollection(collectionId);
+  const singleCollection = await getSingleCollection(collectionId);
+  const { products } = await getProductsFromCollection(collectionId);
 
   return (
     <div className="w-full flex flex-col gap-4">
