@@ -10,35 +10,28 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { deleteCollection } from "@/server/actions/collections";
+import { deleteTag } from "@/server/actions/tags";
 import { Dispatch, SetStateAction } from "react";
 
-type CollectionDelete = {
+type TagDelete = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  collectionId: number;
+  tagId: number;
 };
 
-export default function CollectionDeleteForm({
-  open,
-  setOpen,
-  collectionId,
-}: CollectionDelete) {
+export default function TagDeleteForm({ open, setOpen, tagId }: TagDelete) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            collection.
+            This action cannot be undone. This will permanently delete your tag.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={async () => await deleteCollection(collectionId)}
-          >
+          <AlertDialogAction onClick={async () => await deleteTag(tagId)}>
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

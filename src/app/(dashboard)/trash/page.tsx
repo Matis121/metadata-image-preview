@@ -3,7 +3,7 @@ import CollectionHeader from "@/components/collectionHeader";
 import { getProductsInTrash } from "@/server/actions/products";
 
 export default async function Home() {
-  const { products }: any = await getProductsInTrash();
+  const { products } = await getProductsInTrash();
 
   return (
     <div className="w-full flex flex-col gap-4">

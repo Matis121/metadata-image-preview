@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/drizzle";
-import { product } from "@/drizzle/schema";
+import { Product, product } from "@/drizzle/schema";
 import userSession from "../db/userSession";
 import { eq, and, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -27,7 +27,7 @@ export async function getProducts() {
   }
 }
 
-export async function getProductsFromCollection(collectionId: any) {
+export async function getProductsFromCollection(collectionId: number) {
   const { session } = await userSession();
   if (!session) {
     console.log("session not found");
@@ -153,12 +153,15 @@ export async function addProduct(
   }
 }
 
-export async function updateProduct(productId: number, newProductData: any) {
+export async function updateProduct(
+  productId: number,
+  newProductData: Product
+) {
   const { session } = await userSession();
   if (!session) {
     return console.log("session not found");
   }
-  if (newProductData.collectionId === "unsorted") {
+  if (newProductData.collectionId === 0) {
     await db
       .update(product)
       .set({
@@ -166,7 +169,7 @@ export async function updateProduct(productId: number, newProductData: any) {
         inTrash: false,
         title: newProductData.title,
         description: newProductData.description,
-        imagePath: newProductData.image,
+        imagePath: newProductData.imagePath,
       })
       .where(eq(product.id, productId));
   } else {
@@ -177,7 +180,7 @@ export async function updateProduct(productId: number, newProductData: any) {
         inTrash: false,
         title: newProductData.title,
         description: newProductData.description,
-        imagePath: newProductData.image,
+        imagePath: newProductData.imagePath,
       })
       .where(eq(product.id, productId));
   }

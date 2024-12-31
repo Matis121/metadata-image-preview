@@ -6,7 +6,7 @@ import { LuTrash2 } from "react-icons/lu";
 import { LuGlobe2 } from "react-icons/lu";
 import { LuShapes } from "react-icons/lu";
 
-export default function Defaults() {
+export default function DefaultBookmarks() {
   const navLinks = [
     { name: "All bookmarks", href: "/", icon: <LuGlobe2 size={18} /> },
     { name: "Unsorted", href: "/unsorted", icon: <LuShapes size={18} /> },
@@ -25,7 +25,7 @@ export default function Defaults() {
           <Link
             key={idx}
             href={link.href}
-            className={`dark:text-neutral-300 text-sm font-normal flex justify-between px-4 py-2 hover:dark:bg-neutral-900 ${isActive && "dark:bg-neutral-900"}`}
+            className={`dark:text-neutral-300 text-sm font-normal flex justify-between px-4 py-1 hover:dark:bg-neutral-900 ${isActive && "dark:bg-neutral-900"}`}
           >
             <div className="flex gap-2 items-center">
               {link.icon}

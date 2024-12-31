@@ -4,7 +4,7 @@ import { getProductUnsorted } from "@/server/actions/products";
 import { ProductForm } from "@/components/products/productForm";
 
 export default async function Home() {
-  const { products }: any = await getProductUnsorted();
+  const { products } = await getProductUnsorted();
 
   return (
     <div className="w-full flex flex-col gap-4">

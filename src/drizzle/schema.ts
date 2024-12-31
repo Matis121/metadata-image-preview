@@ -5,6 +5,7 @@ import {
   timestamp,
   boolean,
   varchar,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -26,6 +27,14 @@ export const collection = pgTable("collection", {
   description: text("description"),
 });
 
+export const tag = pgTable("tag", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: text("name").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id),
+});
+
 export const product = pgTable("product", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   collectionId: integer("collectionId").references(() => collection.id),
@@ -37,6 +46,20 @@ export const product = pgTable("product", {
   description: varchar({ length: 1500 }).notNull(),
   productUrl: varchar({ length: 2048 }).notNull(),
   imagePath: varchar({ length: 2048 }).notNull(),
+});
+
+// Product-Tag relationship (Join Table)
+export const productTag = pgTable("product_tag", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  productId: integer("productId")
+    .notNull()
+    .references(() => product.id, { onDelete: "cascade" }),
+  tagId: integer("tagId")
+    .notNull()
+    .references(() => tag.id, { onDelete: "cascade" }),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id),
 });
 
 // Better-auth schemas
@@ -70,3 +93,8 @@ export const verification = pgTable("verification", {
   value: text("value").notNull(),
   expiresAt: timestamp("expiresAt").notNull(),
 });
+
+export type Tag = typeof tag.$inferSelect;
+export type Product = typeof product.$inferSelect;
+export type ProductTag = typeof productTag.$inferSelect;
+export type Collection = typeof collection.$inferSelect;
