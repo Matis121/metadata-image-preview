@@ -17,6 +17,7 @@ type CollectionEdit = {
   setOpen: Dispatch<SetStateAction<boolean>>;
   collectionId: number;
   collectionTitle: string;
+  isDropdownOpen: boolean;
 };
 
 export default function CollectionEditForm({
@@ -24,6 +25,7 @@ export default function CollectionEditForm({
   setOpen,
   collectionId,
   collectionTitle,
+  isDropdownOpen,
 }: CollectionEdit) {
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -48,7 +50,7 @@ export default function CollectionEditForm({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open && !isDropdownOpen} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New collection name</DialogTitle>

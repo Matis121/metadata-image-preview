@@ -15,7 +15,7 @@ export default async function Tags() {
       </div>
       <div className="flex flex-col text-white w-full">
         {tags?.map((tag) => (
-          <SingleTag id={tag.id.toString()} title={tag.name} key={tag.id} />
+          <SingleTag id={tag.id} title={tag.name} key={tag.id} />
         ))}
       </div>
     </div>

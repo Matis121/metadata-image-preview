@@ -17,6 +17,7 @@ type TagEdit = {
   setOpen: Dispatch<SetStateAction<boolean>>;
   tagId: number;
   tagTitle: string;
+  isDropdownOpen: boolean;
 };
 
 export default function TagEditForm({
@@ -24,6 +25,7 @@ export default function TagEditForm({
   setOpen,
   tagId,
   tagTitle,
+  isDropdownOpen,
 }: TagEdit) {
   const formRef = useRef<HTMLFormElement>(null);
   const CollectionSchema = z.object({
@@ -45,7 +47,7 @@ export default function TagEditForm({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open && !isDropdownOpen} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New tag name</DialogTitle>

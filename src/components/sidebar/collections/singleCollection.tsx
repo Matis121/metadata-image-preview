@@ -23,6 +23,7 @@ export default function SingleCollection({
 }) {
   const [openDeleteForm, setOpenDeleteForm] = useState(false);
   const [openEditForm, setOpenEditForm] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathName = usePathname();
   const isActive = pathName.startsWith("/collections/" + id);
 
@@ -36,6 +37,7 @@ export default function SingleCollection({
       <CollectionEditForm
         open={openEditForm}
         setOpen={setOpenEditForm}
+        isDropdownOpen={isDropdownOpen}
         collectionId={id}
         collectionTitle={title}
       />
@@ -52,7 +54,7 @@ export default function SingleCollection({
           {title}
         </div>
         <div className="invisible absolute right-4 top-1.5 group-hover:visible">
-          <DropdownMenu>
+          <DropdownMenu onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger>
               <LuMoreHorizontal />
             </DropdownMenuTrigger>

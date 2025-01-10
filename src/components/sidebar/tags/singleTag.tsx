@@ -17,11 +17,12 @@ export default function SingleTag({
   id,
   title,
 }: {
-  id: string;
+  id: number;
   title: string;
 }) {
   const [openDeleteForm, setOpenDeleteForm] = useState(false);
   const [openEditForm, setOpenEditForm] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathName = usePathname();
   const isActive = pathName.startsWith("/tags/" + id);
 
@@ -30,6 +31,7 @@ export default function SingleTag({
       <TagEditForm
         open={openEditForm}
         setOpen={setOpenEditForm}
+        isDropdownOpen={isDropdownOpen}
         tagId={id}
         tagTitle={title}
       />
@@ -50,7 +52,7 @@ export default function SingleTag({
           {title}
         </div>
         <div className="invisible absolute right-4 top-1.5 group-hover:visible">
-          <DropdownMenu>
+          <DropdownMenu onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger>
               <LuMoreHorizontal />
             </DropdownMenuTrigger>
