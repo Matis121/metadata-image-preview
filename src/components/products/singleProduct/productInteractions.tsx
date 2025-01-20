@@ -5,7 +5,14 @@ import { deleteProduct } from "../../../server/actions/products";
 import EditProductForm from "../editProduct/editProductForm";
 import { LuTrash2, LuPencil } from "react-icons/lu";
 import SpinnerAnimation from "@/components/spinnerAnimation";
-import { Collection, Product, ProductTag, Tag } from "@/drizzle/schema";
+import { Collection, Product, Tag } from "@/drizzle/schema";
+
+type ProductTag = {
+  id: number;
+  productId: number;
+  tagId: number;
+  tagName: string;
+};
 
 type ProductInteractions = {
   singleProduct: Product;

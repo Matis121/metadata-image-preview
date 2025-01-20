@@ -20,10 +20,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Collection, Product, ProductTag, Tag } from "@/drizzle/schema";
+import { Collection, Product, Tag } from "@/drizzle/schema";
 import { updateProduct } from "@/server/actions/products";
 import { addTagsToProduct } from "@/server/actions/tags";
 import { Dispatch, SetStateAction, useState } from "react";
+import Tags from "./tags";
+
+type ProductTag = {
+  id: number;
+  productId: number;
+  tagId: number;
+  tagName: string;
+};
 
 type EditProduct = {
   open: boolean;
@@ -48,6 +56,7 @@ export default function EditProductForm({
     collectionId: productData.collectionId,
     imagePath: productData.imagePath,
   });
+  console.log(productTags);
 
   const [productTagId, setProductTagId] = useState<number>();
 
@@ -158,7 +167,7 @@ export default function EditProductForm({
             <label className="text-neutral-700 text-sm" htmlFor="tag">
               Tags
             </label>
-            <Select
+            {/* <Select
               name="tag"
               onValueChange={(value) => setProductTagId(parseFloat(value))}
             >
@@ -174,7 +183,12 @@ export default function EditProductForm({
                   ))}
                 </SelectGroup>
               </SelectContent>
-            </Select>
+            </Select> */}
+            <Tags
+              tags={tags}
+              productTags={productTags}
+              productData={productData}
+            />
           </div>
           <Button className="ml-auto mt-4">Save changes</Button>
         </form>

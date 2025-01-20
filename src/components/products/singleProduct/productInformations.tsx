@@ -1,4 +1,4 @@
-import { Product, ProductTag, Tag } from "@/drizzle/schema";
+import { Product } from "@/drizzle/schema";
 import { getSingleCollection } from "@/server/actions/collections";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,24 +7,24 @@ import { LuFolder } from "react-icons/lu";
 type ProductInformations = {
   singleProduct: Product;
   showCollection?: boolean;
-  tags: Tag[];
   productTags: ProductTag[];
+};
+
+type ProductTag = {
+  id: number;
+  productId: number;
+  tagId: number;
+  tagName: string;
 };
 
 export default async function productInformations({
   singleProduct,
   showCollection,
-  tags,
   productTags,
 }: ProductInformations) {
   const singleCollection = await getSingleCollection(
     singleProduct.collectionId ?? 0
   );
-
-  const getTagName = (id: number) => {
-    const filteredTag = tags.find((tag: Tag) => tag.id === id);
-    return filteredTag ? filteredTag.name : null;
-  };
 
   return (
     <div className="relative flex flex-col justify-center rounded-md aspect-square break-words border dark:border-neutral-600 overflow-hidden">
@@ -49,9 +49,9 @@ export default async function productInformations({
         <div>
           {productTags && (
             <div className="flex flex-wrap gap-x-2">
-              {productTags.map((tag) => (
+              {productTags.map((tag: ProductTag) => (
                 <p key={tag.id} className="text-sm text-yellow-200 font-light">
-                  #{getTagName(tag.tagId)}
+                  #{tag.tagName}
                 </p>
               ))}
             </div>

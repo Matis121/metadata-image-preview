@@ -15,14 +15,12 @@ export default async function SingleProduct({
   showCollection?: boolean;
 }) {
   const { productTags } = await getTagsInProduct(singleProduct.id);
-  console.log(productTags);
 
   return (
     <div className="relative">
       <ProductInformations
         singleProduct={singleProduct}
         showCollection={showCollection}
-        tags={tags}
         productTags={productTags}
       />
       <ProductInteractions

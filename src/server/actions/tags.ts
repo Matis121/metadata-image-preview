@@ -78,19 +78,27 @@ export async function getTagsInProduct(productId: number) {
     console.log("Session not found");
     return { productTags: [] };
   }
+
   try {
     const productTags = await db
-      .select()
+      .select({
+        id: productTag.id,
+        productId: productTag.productId,
+        tagId: productTag.tagId,
+        tagName: tag.name, // Get the tag name from the `tag` table
+      })
       .from(productTag)
+      .innerJoin(tag, eq(productTag.tagId, tag.id)) // Join `productTag` with `tag`
       .where(
         and(
           eq(productTag.userId, session.user.id),
           eq(productTag.productId, productId)
         )
       );
+
     return { productTags };
   } catch (error) {
-    console.error("Error fetching collections:", error);
+    console.error("Error fetching product tags:", error);
     return { productTags: [] };
   }
 }
@@ -111,6 +119,46 @@ export async function createTag(name: string) {
     return { success: "Tag has been added" };
   } catch (error) {
     return { error: "Error while adding new tag" };
+  }
+}
+
+export async function createTagAndAddToProduct(
+  name: string,
+  productId: number
+) {
+  const { session } = await userSession();
+  if (!session) {
+    return console.log("session not found");
+  }
+
+  try {
+    const newTag: typeof tag.$inferInsert = {
+      name: name,
+      userId: session.user.id,
+    };
+
+    const insertedTag = await db
+      .insert(tag)
+      .values(newTag)
+      .returning({ id: tag.id });
+
+    if (!insertedTag || insertedTag.length === 0) {
+      return { error: "Error retrieving inserted tag" };
+    }
+
+    const tagId = insertedTag[0].id;
+
+    await db.insert(productTag).values({
+      productId: productId,
+      tagId: tagId,
+      userId: session?.user.id,
+    });
+
+    revalidatePath("/");
+    return { success: "Tag has been added and linked to the product" };
+  } catch (error) {
+    console.error(error);
+    return { error: "Error while adding new tag and linking to product" };
   }
 }
 
@@ -145,13 +193,38 @@ export async function addTagsToProduct(productId: number, tagIds: number[]) {
       }));
 
       await db.insert(productTag).values(insertData);
+      revalidatePath("/");
       return { success: "Tag has been added to product" };
     }
   } catch (error) {
     return { error: "Error while adding new tag" };
   }
+}
 
-  // Step 1: Check which tagId-productId pairs already exist
+export async function removeTagFromProduct(productId: number, tagId: number) {
+  console.log(productId, tagId);
+  const { session } = await userSession();
+  if (!session) {
+    console.log("Session not found");
+    return { error: "Session not found" };
+  }
+
+  try {
+    await db
+      .delete(productTag)
+      .where(
+        and(
+          eq(productTag.productId, productId),
+          eq(productTag.tagId, tagId),
+          eq(productTag.userId, session.user.id)
+        )
+      );
+
+    revalidatePath("");
+    return { success: "Tag has been removed from product" };
+  } catch (error) {
+    return { error: "Error while removing tag from product" };
+  }
 }
 
 export async function deleteTag(tagId: number) {
