@@ -2,6 +2,7 @@ import { getTagsInProduct } from "@/server/actions/tags";
 import ProductInformations from "./productInformations";
 import ProductInteractions from "./productInteractions";
 import { Collection, Product, Tag } from "@/drizzle/schema";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function SingleProduct({
   singleProduct,
@@ -14,6 +15,11 @@ export default async function SingleProduct({
   tags: Tag[];
   showCollection?: boolean;
 }) {
+  const { userId } = await auth();
+  if (!userId) {
+    return;
+  }
+
   const { productTags } = await getTagsInProduct(singleProduct.id);
 
   return (
@@ -24,6 +30,7 @@ export default async function SingleProduct({
         productTags={productTags}
       />
       <ProductInteractions
+        clerkUserId={userId}
         singleProduct={singleProduct}
         collections={collections}
         tags={tags}

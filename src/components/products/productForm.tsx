@@ -49,7 +49,13 @@ function SubmitButton() {
     </Button>
   );
 }
-export function ProductForm({ collectionId }: { collectionId?: number }) {
+export function ProductForm({
+  collectionId,
+  clerkUserId,
+}: {
+  collectionId?: number;
+  clerkUserId: string;
+}) {
   const formRef = useRef<HTMLFormElement>(null);
 
   const ProductSchema = z.object({
@@ -66,12 +72,12 @@ export function ProductForm({ collectionId }: { collectionId?: number }) {
       return;
     }
 
-    await addProduct(newProduct.productUrl, collectionId);
+    await addProduct(clerkUserId, newProduct.productUrl, collectionId);
     formRef.current?.reset();
   };
 
   return (
-    <div className="flex w-full justify-end px-4">
+    <div className="flex w-full">
       <Dialog>
         <DialogTrigger asChild>
           <Button>

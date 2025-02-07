@@ -6,6 +6,7 @@ import EditProductForm from "../editProduct/editProductForm";
 import { LuTrash2, LuPencil } from "react-icons/lu";
 import SpinnerAnimation from "@/components/spinnerAnimation";
 import { Collection, Product, Tag } from "@/drizzle/schema";
+import { auth } from "@clerk/nextjs/server";
 
 type ProductTag = {
   id: number;
@@ -15,6 +16,7 @@ type ProductTag = {
 };
 
 type ProductInteractions = {
+  clerkUserId: string;
   singleProduct: Product;
   collections: Collection[];
   tags: Tag[];
@@ -22,6 +24,7 @@ type ProductInteractions = {
 };
 
 export default function ProductInteractions({
+  clerkUserId,
   singleProduct,
   collections,
   tags,
@@ -39,6 +42,7 @@ export default function ProductInteractions({
   return (
     <>
       <EditProductForm
+        clerkUserId={clerkUserId}
         open={openEditProdudct}
         setOpen={setOpenEditProduct}
         productData={singleProduct}

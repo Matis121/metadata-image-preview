@@ -1,8 +1,13 @@
 import { getTags } from "@/server/actions/tags";
 import TagForm from "../../tags/tagForm";
 import SingleTag from "./singleTag";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function Tags() {
+  const { userId } = await auth();
+  if (!userId) {
+    return;
+  }
   const { tags } = await getTags();
 
   return (
@@ -11,7 +16,7 @@ export default async function Tags() {
         <span className="px-4 py-1 dark:text-neutral-500 text-sm font-normal">
           Tags
         </span>
-        <TagForm />
+        <TagForm clerkUserId={userId} />
       </div>
       <div className="flex flex-col text-white w-full">
         {tags?.map((tag) => (

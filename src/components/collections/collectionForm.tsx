@@ -14,7 +14,11 @@ import SubmitButton from "../submitButton";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
-export default function CollectionForm() {
+export default function CollectionForm({
+  clerkUserId,
+}: {
+  clerkUserId: string;
+}) {
   const formRef = useRef<HTMLFormElement>(null);
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -33,7 +37,7 @@ export default function CollectionForm() {
       return;
     }
 
-    await addCollection(newCollection.name);
+    await addCollection(clerkUserId, newCollection.name);
     formRef.current?.reset();
     setOpenDialog(false);
   };

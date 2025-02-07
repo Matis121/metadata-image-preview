@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 import { createTag } from "@/server/actions/tags";
 
-export default function TagForm() {
+export default function TagForm({ clerkUserId }: { clerkUserId: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [openDialog, setOpenDialog] = useState(false);
   const CollectionSchema = z.object({
@@ -30,7 +30,7 @@ export default function TagForm() {
       toast.error("Try again!");
       return;
     }
-    await createTag(newTag.name);
+    await createTag(clerkUserId, newTag.name);
     formRef.current?.reset();
     setOpenDialog(false);
   };

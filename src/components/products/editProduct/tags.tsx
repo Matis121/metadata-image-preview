@@ -15,10 +15,12 @@ type ProductTag = {
 };
 
 export default function Tags({
+  clerkUserId,
   tags,
   productTags,
   productData,
 }: {
+  clerkUserId: string;
   tags: Tag[];
   productTags: ProductTag[];
   productData: Product;
@@ -62,11 +64,15 @@ export default function Tags({
           return;
         }
 
-        await createTagAndAddToProduct(newTag.name, productData.id);
+        await createTagAndAddToProduct(
+          clerkUserId,
+          newTag.name,
+          productData.id
+        );
         setTagName("");
       } else {
         const selectedTag = filteredTags[highlightedIndex];
-        await addTagsToProduct(productData.id, [selectedTag.id]);
+        await addTagsToProduct(clerkUserId, productData.id, [selectedTag.id]);
         setTagName("");
       }
     }
@@ -79,7 +85,7 @@ export default function Tags({
 
   const handleTagClick = async (event: any, tagId: number) => {
     event.preventDefault();
-    await addTagsToProduct(productData.id, [tagId]);
+    await addTagsToProduct(clerkUserId, productData.id, [tagId]);
     setTagName("");
   };
 

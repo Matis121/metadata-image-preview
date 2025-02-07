@@ -4,19 +4,16 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/drizzle";
 import { collection, product } from "@/drizzle/schema";
 import { and, eq } from "drizzle-orm";
-import userSession from "../db/userSession";
+import { auth } from "@clerk/nextjs/server";
 
 export async function getCollections() {
-  const { session } = await userSession();
-  if (!session) {
-    console.log("Session not found");
-    return { collections: [] };
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   try {
     const collections = await db
       .select()
       .from(collection)
-      .where(eq(collection.userId, session.user.id));
+      .where(eq(collection.clerkUserId, userId));
     return { collections };
   } catch (error) {
     console.error("Error fetching collections:", error);
@@ -25,29 +22,25 @@ export async function getCollections() {
 }
 
 export async function getSingleCollection(collectionId: number) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   const singleCollection = await db
     .select()
     .from(collection)
     .where(
-      and(
-        eq(collection.userId, session?.user.id),
-        eq(collection.id, collectionId)
-      )
+      and(eq(collection.clerkUserId, userId), eq(collection.id, collectionId))
     );
   return singleCollection[0];
 }
 
-export async function addCollection(collectionName: string) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+export async function addCollection(
+  clerkUserId: string,
+  collectionName: string
+) {
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   const newCollection: typeof collection.$inferInsert = {
-    userId: session.user.id,
+    clerkUserId: clerkUserId,
     title: collectionName,
   };
   await db.insert(collection).values(newCollection);
@@ -58,10 +51,8 @@ export async function editCollection(
   collectionId: number,
   collectionName: string
 ) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
 
   await db
     .update(collection)
@@ -73,10 +64,8 @@ export async function editCollection(
 }
 
 export async function deleteCollection(collectionId: number) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
 
   try {
     await db.transaction(async (trx) => {
@@ -90,7 +79,7 @@ export async function deleteCollection(collectionId: number) {
         .where(
           and(
             eq(collection.id, collectionId),
-            eq(collection.userId, session.user.id)
+            eq(collection.clerkUserId, userId)
           )
         );
     });

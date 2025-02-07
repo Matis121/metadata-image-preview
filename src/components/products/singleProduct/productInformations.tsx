@@ -22,6 +22,7 @@ export default async function productInformations({
   showCollection,
   productTags,
 }: ProductInformations) {
+
   const singleCollection = await getSingleCollection(
     singleProduct.collectionId ?? 0
   );

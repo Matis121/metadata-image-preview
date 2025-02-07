@@ -1,22 +1,17 @@
 "use server";
 
 import { product, productTag, tag } from "@/drizzle/schema";
-import userSession from "../db/userSession";
 import { revalidatePath } from "next/cache";
 import { db } from "@/drizzle";
 import { eq, and, or } from "drizzle-orm";
+import { auth } from "@clerk/nextjs/server";
 
 export async function getTags() {
-  const { session } = await userSession();
-  if (!session) {
-    console.log("Session not found");
-    return { tags: [] };
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+
   try {
-    const tags = await db
-      .select()
-      .from(tag)
-      .where(eq(tag.userId, session.user.id));
+    const tags = await db.select().from(tag).where(eq(tag.clerkUserId, userId));
     return { tags };
   } catch (error) {
     console.error("Error fetching collections:", error);
@@ -25,30 +20,26 @@ export async function getTags() {
 }
 
 export async function getSingleTag(tagId: number) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+
   const singleTag = await db
     .select()
     .from(tag)
-    .where(and(eq(tag.userId, session?.user.id), eq(tag.id, tagId)));
+    .where(and(eq(tag.clerkUserId, userId), eq(tag.id, tagId)));
   return singleTag[0];
 }
 
 export async function getProductsByTag(tagId: number) {
-  const { session } = await userSession();
-  if (!session) {
-    console.log("Session not found");
-    return { products: [] };
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
 
   try {
     const productIds = await db
       .select({ productId: productTag.productId })
       .from(productTag)
       .where(
-        and(eq(productTag.userId, session.user.id), eq(productTag.tagId, tagId))
+        and(eq(productTag.clerkUserId, userId), eq(productTag.tagId, tagId))
       );
 
     if (productIds.length === 0) {
@@ -63,7 +54,7 @@ export async function getProductsByTag(tagId: number) {
     const productList = await db
       .select()
       .from(product)
-      .where(and(eq(product.userId, session.user.id), whereCondition));
+      .where(and(eq(product.clerkUserId, userId), whereCondition));
 
     return { products: productList };
   } catch (error) {
@@ -73,11 +64,8 @@ export async function getProductsByTag(tagId: number) {
 }
 
 export async function getTagsInProduct(productId: number) {
-  const { session } = await userSession();
-  if (!session) {
-    console.log("Session not found");
-    return { productTags: [] };
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
 
   try {
     const productTags = await db
@@ -91,7 +79,7 @@ export async function getTagsInProduct(productId: number) {
       .innerJoin(tag, eq(productTag.tagId, tag.id)) // Join `productTag` with `tag`
       .where(
         and(
-          eq(productTag.userId, session.user.id),
+          eq(productTag.clerkUserId, userId),
           eq(productTag.productId, productId)
         )
       );
@@ -103,15 +91,14 @@ export async function getTagsInProduct(productId: number) {
   }
 }
 
-export async function createTag(name: string) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+export async function createTag(clerkUserId: string, name: string) {
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+
   try {
     const newTag: typeof tag.$inferInsert = {
       name: name,
-      userId: session?.user.id,
+      clerkUserId: clerkUserId,
     };
 
     await db.insert(tag).values(newTag);
@@ -123,18 +110,17 @@ export async function createTag(name: string) {
 }
 
 export async function createTagAndAddToProduct(
+  clerkUserId: string,
   name: string,
   productId: number
 ) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
 
   try {
     const newTag: typeof tag.$inferInsert = {
       name: name,
-      userId: session.user.id,
+      clerkUserId: clerkUserId,
     };
 
     const insertedTag = await db
@@ -151,7 +137,7 @@ export async function createTagAndAddToProduct(
     await db.insert(productTag).values({
       productId: productId,
       tagId: tagId,
-      userId: session?.user.id,
+      clerkUserId: clerkUserId,
     });
 
     revalidatePath("/");
@@ -162,19 +148,21 @@ export async function createTagAndAddToProduct(
   }
 }
 
-export async function addTagsToProduct(productId: number, tagIds: number[]) {
-  const { session } = await userSession();
-  if (!session) {
-    console.log("Session not found");
-    return { productTags: [] };
-  }
+export async function addTagsToProduct(
+  clerkUserId: string,
+  productId: number,
+  tagIds: number[]
+) {
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+
   try {
     const existingTags = await db
       .select()
       .from(productTag)
       .where(
         and(
-          eq(productTag.userId, session.user.id),
+          eq(productTag.clerkUserId, userId),
           eq(productTag.productId, productId)
         )
       );
@@ -189,7 +177,7 @@ export async function addTagsToProduct(productId: number, tagIds: number[]) {
       const insertData = tagsToAdd.map((tagId: number) => ({
         productId: productId,
         tagId,
-        userId: session?.user.id,
+        clerkUserId: clerkUserId,
       }));
 
       await db.insert(productTag).values(insertData);
@@ -202,12 +190,8 @@ export async function addTagsToProduct(productId: number, tagIds: number[]) {
 }
 
 export async function removeTagFromProduct(productId: number, tagId: number) {
-  console.log(productId, tagId);
-  const { session } = await userSession();
-  if (!session) {
-    console.log("Session not found");
-    return { error: "Session not found" };
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
 
   try {
     await db
@@ -216,7 +200,7 @@ export async function removeTagFromProduct(productId: number, tagId: number) {
         and(
           eq(productTag.productId, productId),
           eq(productTag.tagId, tagId),
-          eq(productTag.userId, session.user.id)
+          eq(productTag.clerkUserId, userId)
         )
       );
 
@@ -228,14 +212,12 @@ export async function removeTagFromProduct(productId: number, tagId: number) {
 }
 
 export async function deleteTag(tagId: number) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   try {
     await db
       .delete(tag)
-      .where(and(eq(tag.id, tagId), eq(tag.userId, session.user.id)));
+      .where(and(eq(tag.id, tagId), eq(tag.clerkUserId, userId)));
     revalidatePath("/");
     return { success: "Tag has been deleted" };
   } catch (error) {
@@ -244,15 +226,13 @@ export async function deleteTag(tagId: number) {
 }
 
 export async function editTag(tagId: number, tagName: string) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   try {
     await db
       .update(tag)
       .set({ name: tagName })
-      .where(and(eq(tag.id, tagId), eq(tag.userId, session.user.id)));
+      .where(and(eq(tag.id, tagId), eq(tag.clerkUserId, userId)));
 
     revalidatePath("/");
     return { success: "Tag has been updated" };

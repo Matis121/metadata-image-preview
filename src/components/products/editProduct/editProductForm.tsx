@@ -34,6 +34,7 @@ type ProductTag = {
 };
 
 type EditProduct = {
+  clerkUserId: string;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   productData: Product;
@@ -43,6 +44,7 @@ type EditProduct = {
 };
 
 export default function EditProductForm({
+  clerkUserId,
   open,
   setOpen,
   productData,
@@ -63,7 +65,7 @@ export default function EditProductForm({
   const handleSubmit = async () => {
     await updateProduct(productData.id, data as Product);
     if (productTagId !== undefined) {
-      await addTagsToProduct(productData.id, [productTagId]);
+      await addTagsToProduct(clerkUserId, productData.id, [productTagId]);
     }
     setOpen(false);
   };
@@ -185,6 +187,7 @@ export default function EditProductForm({
               </SelectContent>
             </Select> */}
             <Tags
+              clerkUserId={clerkUserId}
               tags={tags}
               productTags={productTags}
               productData={productData}

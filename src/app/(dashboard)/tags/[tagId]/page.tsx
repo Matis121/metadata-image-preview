@@ -1,7 +1,9 @@
 import CollectionHeader from "@/components/collectionHeader";
+import PageTopSection from "@/components/pageTopSection";
 import ListOfProducts from "@/components/products/list/listOfProducts";
 import { ProductForm } from "@/components/products/productForm";
 import { getProductsByTag, getSingleTag } from "@/server/actions/tags";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function Tags({
   params,
@@ -10,13 +12,16 @@ export default async function Tags({
     tagId: number;
   };
 }) {
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+
   const { tagId } = await params;
   const singleTag = await getSingleTag(tagId);
   const { products } = await getProductsByTag(tagId);
 
   return (
     <div className="w-full flex flex-col gap-4">
-      <ProductForm collectionId={tagId} />
+      <PageTopSection clerkUserId={userId} collectionId={tagId} />
       <CollectionHeader
         headerName={`${singleTag !== undefined ? singleTag.name : ""}`}
       />

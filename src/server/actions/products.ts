@@ -2,24 +2,20 @@
 
 import { db } from "@/drizzle";
 import { Product, product } from "@/drizzle/schema";
-import userSession from "../db/userSession";
 import { eq, and, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { ScrapeMetaData } from "@/utils/scrapeMetaData";
+import { auth } from "@clerk/nextjs/server";
 
 export async function getProducts() {
-  const { session } = await userSession();
-  if (!session) {
-    console.log("session not found");
-    return { products: [] };
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+  console.log(userId);
   try {
     const products = await db
       .select()
       .from(product)
-      .where(
-        and(eq(product.userId, session.user.id), eq(product.inTrash, false))
-      );
+      .where(and(eq(product.clerkUserId, userId), eq(product.inTrash, false)));
     return { products };
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -28,18 +24,15 @@ export async function getProducts() {
 }
 
 export async function getProductsFromCollection(collectionId: number) {
-  const { session } = await userSession();
-  if (!session) {
-    console.log("session not found");
-    return { products: [] };
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   try {
     const products = await db
       .select()
       .from(product)
       .where(
         and(
-          eq(product.userId, session.user.id),
+          eq(product.clerkUserId, userId),
           eq(product.collectionId, collectionId)
         )
       );
@@ -51,18 +44,13 @@ export async function getProductsFromCollection(collectionId: number) {
 }
 
 export async function getProductsInTrash() {
-  const { session } = await userSession();
-  if (!session) {
-    console.log("session not found");
-    return { products: [] };
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   try {
     const products = await db
       .select()
       .from(product)
-      .where(
-        and(eq(product.userId, session.user.id), eq(product.inTrash, true))
-      );
+      .where(and(eq(product.clerkUserId, userId), eq(product.inTrash, true)));
     return { products };
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -71,18 +59,15 @@ export async function getProductsInTrash() {
 }
 
 export async function getProductUnsorted() {
-  const { session } = await userSession();
-  if (!session) {
-    console.log("session not found");
-    return { products: [] };
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   try {
     const products = await db
       .select()
       .from(product)
       .where(
         and(
-          eq(product.userId, session.user.id),
+          eq(product.clerkUserId, userId),
           isNull(product.collectionId),
           eq(product.inTrash, false)
         )
@@ -95,10 +80,8 @@ export async function getProductUnsorted() {
 }
 
 export async function deleteProduct(productId: number) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   try {
     const existingProducts = await db
       .select()
@@ -127,12 +110,13 @@ export async function deleteProduct(productId: number) {
 }
 
 export async function addProduct(
+  clerkUserId: string,
   imageUrl: string,
   collectionId: number | undefined
 ) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
+  const { userId } = await auth();
+  if (!userId) {
+    return;
   }
   const metaData = await ScrapeMetaData(imageUrl);
   try {
@@ -141,7 +125,7 @@ export async function addProduct(
       description: metaData.description,
       productUrl: metaData.url,
       imagePath: metaData.images[0],
-      userId: session?.user.id,
+      clerkUserId: clerkUserId,
       ...(collectionId && { collectionId }),
     };
 
@@ -157,10 +141,8 @@ export async function updateProduct(
   productId: number,
   newProductData: Product
 ) {
-  const { session } = await userSession();
-  if (!session) {
-    return console.log("session not found");
-  }
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
   if (newProductData.collectionId === 0) {
     await db
       .update(product)
