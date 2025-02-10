@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { db } from "@/drizzle";
 import { collection, product } from "@/drizzle/schema";
-import { and, eq } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 
 export async function getCollections() {
@@ -14,6 +14,30 @@ export async function getCollections() {
       .select()
       .from(collection)
       .where(eq(collection.clerkUserId, userId));
+    return { collections };
+  } catch (error) {
+    console.error("Error fetching collections:", error);
+    return { collections: [] };
+  }
+}
+
+export async function getCollectionsWithCount() {
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+
+  try {
+    const collections = await db
+      .select({
+        id: collection.id,
+        title: collection.title,
+        description: collection.description,
+        productCount: count(product.id).as("product_count"),
+      })
+      .from(collection)
+      .leftJoin(product, eq(product.collectionId, collection.id))
+      .where(eq(collection.clerkUserId, userId))
+      .groupBy(collection.id);
+
     return { collections };
   } catch (error) {
     console.error("Error fetching collections:", error);

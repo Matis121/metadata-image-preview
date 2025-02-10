@@ -10,7 +10,6 @@ import { auth } from "@clerk/nextjs/server";
 export async function getProducts() {
   const { userId, redirectToSignIn } = await auth();
   if (!userId) return redirectToSignIn();
-  console.log(userId);
   try {
     const products = await db
       .select()

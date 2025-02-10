@@ -1,15 +1,25 @@
-import { getCollections } from "@/server/actions/collections";
+import {
+  getCollections,
+  getCollectionsWithCount,
+} from "@/server/actions/collections";
 import CollectionForm from "../../collections/collectionForm";
 import SingleCollection from "./singleCollection";
-import { Collection } from "@/drizzle/schema";
 import { auth } from "@clerk/nextjs/server";
+
+type Collection = {
+  id: number;
+  title: string;
+  description?: string | null;
+  productCount: number;
+};
 
 export default async function Collections() {
   const { userId } = await auth();
   if (!userId) {
     return;
   }
-  const { collections } = await getCollections();
+  const { collections } = await getCollectionsWithCount();
+  console.log(collections);
 
   return (
     <div className="flex flex-col items-start w-full">
@@ -23,6 +33,7 @@ export default async function Collections() {
         {collections?.length > 0 &&
           collections.map((collection: Collection) => (
             <SingleCollection
+              count={collection.productCount}
               id={collection.id}
               title={collection.title}
               key={collection.id}

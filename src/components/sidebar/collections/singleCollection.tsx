@@ -17,9 +17,11 @@ import CollectionEditForm from "../../collections/collectionEditForm";
 export default function SingleCollection({
   id,
   title,
+  count,
 }: {
   id: number;
   title: string;
+  count: number;
 }) {
   const [openDeleteForm, setOpenDeleteForm] = useState(false);
   const [openEditForm, setOpenEditForm] = useState(false);
@@ -53,7 +55,10 @@ export default function SingleCollection({
           <LuFolder />
           {title}
         </div>
-        <div className="invisible absolute right-4 top-1.5 group-hover:visible">
+        <div className="flex items-center justify-center px-1 min-w-4">
+          {count}
+        </div>
+        <div className="invisible absolute border bg-neutral-600 hover:bg-neutral-700 rounded-md right-3 top-0.5 flex items-center justify-center p-1 group-hover:visible">
           <DropdownMenu onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger>
               <LuMoreHorizontal />

@@ -1,4 +1,4 @@
-import { getTags } from "@/server/actions/tags";
+import { getTags, getTagsWithCount } from "@/server/actions/tags";
 import TagForm from "../../tags/tagForm";
 import SingleTag from "./singleTag";
 import { auth } from "@clerk/nextjs/server";
@@ -8,7 +8,9 @@ export default async function Tags() {
   if (!userId) {
     return;
   }
-  const { tags } = await getTags();
+
+  const { tags } = await getTagsWithCount();
+  console.log(tags);
 
   return (
     <div className="flex flex-col items-start w-full">
@@ -20,7 +22,12 @@ export default async function Tags() {
       </div>
       <div className="flex flex-col text-white w-full">
         {tags?.map((tag) => (
-          <SingleTag id={tag.id} title={tag.name} key={tag.id} />
+          <SingleTag
+            id={tag.id}
+            title={tag.name}
+            key={tag.id}
+            count={tag.productCount}
+          />
         ))}
       </div>
     </div>

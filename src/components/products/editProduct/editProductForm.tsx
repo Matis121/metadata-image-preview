@@ -58,7 +58,6 @@ export default function EditProductForm({
     collectionId: productData.collectionId,
     imagePath: productData.imagePath,
   });
-  console.log(productTags);
 
   const [productTagId, setProductTagId] = useState<number>();
 
@@ -72,7 +71,7 @@ export default function EditProductForm({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="md:max-w-[550px]">
         <DialogHeader>
           <DialogTitle>Edit product</DialogTitle>
           <DialogDescription>Change your collection</DialogDescription>
@@ -126,6 +125,7 @@ export default function EditProductForm({
                   description: e.target.value,
                 }))
               }
+              className="min-h-28"
             />
           </div>
           <div>

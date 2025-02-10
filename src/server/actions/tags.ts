@@ -3,7 +3,7 @@
 import { product, productTag, tag } from "@/drizzle/schema";
 import { revalidatePath } from "next/cache";
 import { db } from "@/drizzle";
-import { eq, and, or } from "drizzle-orm";
+import { eq, and, or, count } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 
 export async function getTags() {
@@ -12,6 +12,28 @@ export async function getTags() {
 
   try {
     const tags = await db.select().from(tag).where(eq(tag.clerkUserId, userId));
+    return { tags };
+  } catch (error) {
+    console.error("Error fetching collections:", error);
+    return { tags: [] };
+  }
+}
+
+export async function getTagsWithCount() {
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+
+  try {
+    const tags = await db
+      .select({
+        id: tag.id,
+        name: tag.name,
+        productCount: count(productTag.id).as("product_count"),
+      })
+      .from(tag)
+      .leftJoin(productTag, eq(productTag.tagId, tag.id))
+      .where(eq(tag.clerkUserId, userId))
+      .groupBy(tag.id);
     return { tags };
   } catch (error) {
     console.error("Error fetching collections:", error);
