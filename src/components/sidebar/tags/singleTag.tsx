@@ -26,7 +26,7 @@ export default function SingleTag({
   const [openEditForm, setOpenEditForm] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathName = usePathname();
-  const isActive = pathName.startsWith("/tags/" + id);
+  const isActive = pathName === `/tags/${id}`;
 
   return (
     <>

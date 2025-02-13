@@ -31,9 +31,7 @@ export default function SingleCollection({
   const [openEditForm, setOpenEditForm] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathName = usePathname();
-  const isActive = pathName.startsWith("/collections/" + id);
-
-  console.log(emoji);
+  const isActive = pathName === `/collections/${id}`;
 
   return (
     <>

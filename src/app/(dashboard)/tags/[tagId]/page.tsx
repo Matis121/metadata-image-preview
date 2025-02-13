@@ -1,8 +1,7 @@
 import CollectionHeader from "@/components/collectionHeader";
 import PageTopSection from "@/components/pageTopSection";
-import ListOfProducts from "@/components/products/list/listOfProducts";
-import { ProductForm } from "@/components/products/productForm";
-import { getProductsByTag, getSingleTag } from "@/server/actions/tags";
+import ProductsView from "@/components/products/productsView";
+import { getSingleTag } from "@/server/actions/tags";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function Tags({
@@ -17,7 +16,6 @@ export default async function Tags({
 
   const { tagId } = await params;
   const singleTag = await getSingleTag(tagId);
-  const { products } = await getProductsByTag(tagId);
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -25,9 +23,10 @@ export default async function Tags({
       <CollectionHeader
         headerName={`${singleTag !== undefined ? singleTag.name : ""}`}
       />
-      <div className="px-4">
-        <ListOfProducts products={products} />
-      </div>
+      <ProductsView
+        fetchProductsType="getProductsByTag"
+        fetchArgument={tagId}
+      />
     </div>
   );
 }

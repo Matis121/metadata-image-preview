@@ -1,9 +1,7 @@
 import CollectionHeader from "@/components/collectionHeader";
 import PageTopSection from "@/components/pageTopSection";
-import ListOfProducts from "@/components/products/list/listOfProducts";
-import { ProductForm } from "@/components/products/productForm";
+import ProductsView from "@/components/products/productsView";
 import { getSingleCollection } from "@/server/actions/collections";
-import { getProductsFromCollection } from "@/server/actions/products";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function Home({
@@ -18,17 +16,22 @@ export default async function Home({
 
   const { collectionId } = await params;
   const singleCollection = await getSingleCollection(collectionId);
-  const { products } = await getProductsFromCollection(collectionId);
+
+  if (!singleCollection) {
+    return;
+  }
 
   return (
     <div className="w-full flex flex-col gap-4">
       <PageTopSection clerkUserId={userId} collectionId={collectionId} />
       <CollectionHeader
-        headerName={`${singleCollection !== undefined ? singleCollection.title : ""}`}
+        headerName={singleCollection.title}
+        emoji={singleCollection.emoji}
       />
-      <div className="px-4">
-        <ListOfProducts products={products} />
-      </div>
+      <ProductsView
+        fetchProductsType="getProductsFromCollection"
+        fetchArgument={collectionId}
+      />
     </div>
   );
 }
