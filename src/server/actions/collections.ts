@@ -31,6 +31,7 @@ export async function getCollectionsWithCount() {
         id: collection.id,
         title: collection.title,
         description: collection.description,
+        emoji: collection.emoji,
         productCount: count(product.id).as("product_count"),
       })
       .from(collection)
@@ -115,5 +116,29 @@ export async function deleteCollection(collectionId: number) {
   } catch (error) {
     console.error("Error while deleting collection:", error);
     return { error: "Error while deleting collection" };
+  }
+}
+
+export async function setCollectionEmoji(
+  collectionId: number,
+  newEmoji: string
+) {
+  const { userId, redirectToSignIn } = await auth();
+  if (!userId) return redirectToSignIn();
+
+  try {
+    await db
+      .update(collection)
+      .set({ emoji: newEmoji })
+      .where(
+        and(eq(collection.clerkUserId, userId), eq(collection.id, collectionId))
+      );
+
+    revalidatePath("/");
+    return {
+      success: "Collection emoji has been updated",
+    };
+  } catch (error) {
+    return { error: "Error while updating collection emoji" };
   }
 }

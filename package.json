@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.11.1",
+    "@emoji-mart/data": "^1.2.1",
+    "@emoji-mart/react": "^1.1.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
@@ -26,6 +28,7 @@
     "cmdk": "^1.0.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.35.1",
+    "emoji-mart": "^5.6.0",
     "link-preview-js": "^3.0.5",
     "lucide-react": "^0.453.0",
     "metadata-scraper": "^0.2.61",

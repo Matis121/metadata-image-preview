@@ -22,6 +22,7 @@ export const collection = pgTable("collection", {
   clerkUserId: text("clerkUserId").notNull(),
   title: text("title").notNull(),
   description: text("description"),
+  emoji: text("emoji").default(""),
 });
 
 export const tag = pgTable("tag", {

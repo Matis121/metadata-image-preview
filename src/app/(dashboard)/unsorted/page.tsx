@@ -1,9 +1,9 @@
 import ListOfProducts from "@/components/products/list/listOfProducts";
 import CollectionHeader from "@/components/collectionHeader";
 import { getProductUnsorted } from "@/server/actions/products";
-import { ProductForm } from "@/components/products/productForm";
 import { auth } from "@clerk/nextjs/server";
 import PageTopSection from "@/components/pageTopSection";
+import CollectionSetEmoji from "@/components/collections/collectionSetEmoji";
 
 export default async function Home() {
   const { userId, redirectToSignIn } = await auth();

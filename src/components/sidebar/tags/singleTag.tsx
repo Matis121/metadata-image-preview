@@ -50,7 +50,7 @@ export default function SingleTag({
         }`}
       >
         <div className="flex gap-2">
-          <span>#</span>
+          <span className="text-yellow-200">#</span>
           {title}
         </div>
         <div className="flex items-center justify-center px-1 min-w-4">

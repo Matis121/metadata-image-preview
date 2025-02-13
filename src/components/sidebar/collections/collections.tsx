@@ -11,6 +11,7 @@ type Collection = {
   title: string;
   description?: string | null;
   productCount: number;
+  emoji?: string | null;
 };
 
 export default async function Collections() {
@@ -37,6 +38,7 @@ export default async function Collections() {
               id={collection.id}
               title={collection.title}
               key={collection.id}
+              emoji={collection.emoji}
             />
           ))}
       </div>
