@@ -19,14 +19,16 @@ export default function CollectionSetEmoji({
   open,
   setOpen,
   collectionId,
+  isDropdownOpen,
 }: {
   open: boolean;
+  isDropdownOpen: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   collectionId: number;
 }) {
   return (
     <div>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open && !isDropdownOpen} onOpenChange={setOpen}>
         <DialogContent className="flex flex-col justify-center items-center gap-8">
           <DialogTitle>Set your icon</DialogTitle>
           <Picker

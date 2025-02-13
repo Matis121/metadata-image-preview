@@ -52,6 +52,7 @@ export default function SingleCollection({
       <CollectionSetEmoji
         open={openEmojiForm}
         setOpen={setOpenEmojiForm}
+        isDropdownOpen={isDropdownOpen}
         collectionId={id}
       />
 
@@ -75,10 +76,12 @@ export default function SingleCollection({
         <div className="flex items-center justify-center px-1 min-w-4">
           {count}
         </div>
-        <div className="invisible absolute border bg-neutral-600 hover:bg-neutral-700 rounded-md right-3 top-0.5 flex items-center justify-center p-1 group-hover:visible">
+        <div className="invisible absolute border bg-neutral-600 hover:bg-neutral-700 rounded-md right-3 top-0.5 flex items-center justify-center group-hover:visible">
           <DropdownMenu onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger>
-              <LuMoreHorizontal />
+              <div className="p-1 rounded-md">
+                <LuMoreHorizontal />
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem

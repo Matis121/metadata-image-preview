@@ -11,7 +11,7 @@ export default function PageTopSection({
   collectionId?: number;
 }) {
   return (
-    <div className="w-full flex justify-between px-4">
+    <div className="w-full flex justify-between px-4 min-h-[42px]">
       {isProductFormActive && <ProductForm clerkUserId={clerkUserId} />}
       <div className="ml-auto">
         <UserButton />
