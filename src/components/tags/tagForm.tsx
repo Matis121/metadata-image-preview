@@ -30,9 +30,14 @@ export default function TagForm({ clerkUserId }: { clerkUserId: string }) {
       toast.error("Try again!");
       return;
     }
-    await createTag(clerkUserId, newTag.name);
+    const response = await createTag(newTag.name);
+    if (!response.success) {
+      toast.error(`${response.error}`);
+      return;
+    }
     formRef.current?.reset();
     setOpenDialog(false);
+    toast.success("Tag has been created!");
   };
 
   return (

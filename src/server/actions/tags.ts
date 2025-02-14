@@ -113,17 +113,22 @@ export async function getTagsInProduct(productId: number) {
   }
 }
 
-export async function createTag(clerkUserId: string, name: string) {
+export async function createTag(name: string) {
   const { userId, redirectToSignIn } = await auth();
   if (!userId) return redirectToSignIn();
 
   try {
-    const newTag: typeof tag.$inferInsert = {
-      name: name,
-      clerkUserId: clerkUserId,
-    };
+    const existingTagName = await db
+      .select()
+      .from(tag)
+      .where(and(eq(tag.clerkUserId, userId), eq(tag.name, name)))
+      .limit(1);
 
-    await db.insert(tag).values(newTag);
+    if (existingTagName.length > 0) {
+      return { error: "Tag already exists" };
+    }
+
+    await db.insert(tag).values({ name, clerkUserId: userId });
     revalidatePath("/");
     return { success: "Tag has been added" };
   } catch (error) {

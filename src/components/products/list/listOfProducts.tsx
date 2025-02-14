@@ -18,10 +18,10 @@ export default async function ListOfProducts({
       <div className="w-full grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
         {products?.map((product: Product) => (
           <SingleProduct
+            key={product.id}
             collections={collections}
             tags={tags}
             singleProduct={product}
-            key={product.id}
             showCollection={showCollection}
           />
         ))}

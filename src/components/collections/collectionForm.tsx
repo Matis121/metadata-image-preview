@@ -37,9 +37,14 @@ export default function CollectionForm({
       return;
     }
 
-    await addCollection(clerkUserId, newCollection.name);
+    const response = await addCollection(clerkUserId, newCollection.name);
+    if (!response.success) {
+      toast.error(`${response.error}`);
+      return;
+    }
     formRef.current?.reset();
     setOpenDialog(false);
+    toast.success(`${response.success}`);
   };
 
   return (

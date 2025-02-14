@@ -5,6 +5,7 @@ import {
   timestamp,
   boolean,
   varchar,
+  unique,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -17,19 +18,34 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updatedAt").notNull(),
 });
 
-export const collection = pgTable("collection", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  clerkUserId: text("clerkUserId").notNull(),
-  title: text("title").notNull(),
-  description: text("description"),
-  emoji: text("emoji").default(""),
-});
+export const collection = pgTable(
+  "collection",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    clerkUserId: text("clerkUserId").notNull(),
+    title: text("title").notNull(),
+    description: text("description"),
+    emoji: text("emoji").default(""),
+  },
+  (collection) => ({
+    uniqueCollectionPerUser: unique("uniqueCollectionPerUser").on(
+      collection.clerkUserId,
+      collection.title
+    ),
+  })
+);
 
-export const tag = pgTable("tag", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: text("name").notNull(),
-  clerkUserId: text("clerkUserId").notNull(),
-});
+export const tag = pgTable(
+  "tag",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    name: text("name").notNull(),
+    clerkUserId: text("clerkUserId").notNull(),
+  },
+  (tag) => ({
+    uniqueTagPerUser: unique("uniqueTagPerUser").on(tag.clerkUserId, tag.name),
+  })
+);
 
 export const product = pgTable("product", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),

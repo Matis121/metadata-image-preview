@@ -64,13 +64,30 @@ export async function addCollection(
 ) {
   const { userId, redirectToSignIn } = await auth();
   if (!userId) return redirectToSignIn();
+
+  const existingCollectioName = await db
+    .select()
+    .from(collection)
+    .where(
+      and(
+        eq(collection.clerkUserId, userId),
+        eq(collection.title, collectionName)
+      )
+    )
+    .limit(1);
+
+  if (existingCollectioName.length > 0) {
+    return { error: "Collection name already exists" };
+  }
+
   const newCollection: typeof collection.$inferInsert = {
     clerkUserId: clerkUserId,
     title: collectionName,
   };
+
   await db.insert(collection).values(newCollection);
   revalidatePath("/");
-  return { success: "Product has been added" };
+  return { success: "Collection has been added" };
 }
 export async function editCollection(
   collectionId: number,
