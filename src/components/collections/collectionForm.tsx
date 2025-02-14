@@ -23,7 +23,9 @@ export default function CollectionForm({
   const [openDialog, setOpenDialog] = useState(false);
 
   const CollectionSchema = z.object({
-    name: z.string(),
+    name: z
+      .string()
+      .max(26, { message: "Must be 26 or fewer characters long" }),
   });
 
   const handleSubmit = async (formData: FormData) => {
@@ -33,7 +35,9 @@ export default function CollectionForm({
 
     const result = CollectionSchema.safeParse(newCollection);
     if (!result.success) {
-      toast.error("Try again!");
+      result.error.errors.forEach((err) => {
+        toast.error(err.message);
+      });
       return;
     }
 
