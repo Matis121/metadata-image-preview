@@ -1,5 +1,3 @@
-import { DataTable } from "@/components/products/dataList/dataTable";
-import { columns } from "@/components/products/dataList/column";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProductList from "./productViews/list/productList";
 import ProductCard from "./productViews/card/productCard";
@@ -10,6 +8,7 @@ import {
   getProductsInTrash,
 } from "@/server/actions/products";
 import { getProductsByTag } from "@/server/actions/tags";
+import EmptyState from "./emptyState";
 
 export default async function ProductsView({
   fetchProductsType,
@@ -26,6 +25,7 @@ export default async function ProductsView({
   showCollection?: boolean;
 }) {
   let response;
+  const isTrashPath = fetchProductsType === "getsProductsInTrash";
 
   switch (fetchProductsType) {
     case "getProductUnsorted":
@@ -57,10 +57,22 @@ export default async function ProductsView({
           <TabsTrigger value="card">Card</TabsTrigger>
         </TabsList>
         <TabsContent value="list">
-          <ProductList products={products} showCollection={showCollection} />
+          <div className="flex flex-col gap-4">
+            <ProductList products={products} showCollection={showCollection} />
+            <EmptyState
+              productsLength={products?.length}
+              isTrashPath={isTrashPath}
+            />
+          </div>
         </TabsContent>
         <TabsContent value="card">
-          <ProductCard products={products} showCollection={showCollection} />
+          <div className="flex flex-col gap-4">
+            <ProductCard products={products} showCollection={showCollection} />
+            <EmptyState
+              productsLength={products?.length}
+              isTrashPath={isTrashPath}
+            />
+          </div>
         </TabsContent>
       </Tabs>
     </div>
