@@ -10,7 +10,7 @@ export default async function Home() {
   if (!userId) return redirectToSignIn();
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-2">
       <PageTopSection clerkUserId={userId} isProductFormActive={false} />
       <CollectionHeader headerName="Trash" />
       <ProductsView fetchProductsType="getsProductsInTrash" />

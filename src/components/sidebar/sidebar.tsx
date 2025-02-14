@@ -7,10 +7,7 @@ import { Button } from "../ui/button";
 export default function Navigation() {
   return (
     <nav className="sticky top-0 h-[100vh] w-[380px] flex flex-col text-xl font-semibold bg-white dark:bg-neutral-800 shadow-sm border-r dark:border-neutral-600">
-      <a
-        className="font-bold dark:text-neutral-300 px-4 py-3.5 mb-[10px]"
-        href="/"
-      >
+      <a className="font-bold dark:text-neutral-300 px-4 py-4" href="/">
         QuickLinks
       </a>
       <div className="border-t border-b border-neutral-600 py-2">

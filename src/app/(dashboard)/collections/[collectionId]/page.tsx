@@ -22,7 +22,7 @@ export default async function Home({
   }
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-2">
       <PageTopSection clerkUserId={userId} collectionId={collectionId} />
       <CollectionHeader
         headerName={singleCollection.title}

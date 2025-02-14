@@ -18,7 +18,7 @@ export default async function Tags({
   const singleTag = await getSingleTag(tagId);
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-2">
       <PageTopSection clerkUserId={userId} collectionId={tagId} />
       <CollectionHeader
         headerName={`${singleTag !== undefined ? singleTag.name : ""}`}

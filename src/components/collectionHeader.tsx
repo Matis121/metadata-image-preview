@@ -10,7 +10,7 @@ export default function CollectionHeader({
   isTagHeader?: boolean;
 }) {
   return (
-    <div className="flex gap-2 items-center py-2 -mt-1 px-4 dark:text-neutral-200 border-t dark:border-neutral-600">
+    <div className="flex gap-2 items-center py-2 px-4 dark:text-neutral-200">
       {emoji ? (
         <span>{emoji}</span>
       ) : isTagHeader ? (
