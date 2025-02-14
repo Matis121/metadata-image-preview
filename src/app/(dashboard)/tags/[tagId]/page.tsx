@@ -22,6 +22,7 @@ export default async function Tags({
       <PageTopSection clerkUserId={userId} collectionId={tagId} />
       <CollectionHeader
         headerName={`${singleTag !== undefined ? singleTag.name : ""}`}
+        isTagHeader={true}
       />
       <ProductsView
         fetchProductsType="getProductsByTag"
