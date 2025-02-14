@@ -1,7 +1,8 @@
 import { DataTable } from "@/components/products/dataList/dataTable";
 import { columns } from "@/components/products/dataList/column";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ListOfProducts from "./list/listOfProducts";
+import ProductList from "./productViews/list/productList";
+import ProductCard from "./productViews/card/productCard";
 import {
   getProductUnsorted,
   getProductsFromCollection,
@@ -50,16 +51,16 @@ export default async function ProductsView({
 
   return (
     <div className="px-4">
-      <Tabs defaultValue="grid" className="w-full flex flex-col gap-6 -mt-12">
+      <Tabs defaultValue="list" className="w-full flex flex-col gap-6 -mt-12">
         <TabsList className="ml-auto">
-          <TabsTrigger value="grid">Cards</TabsTrigger>
-          <TabsTrigger value="table">Table</TabsTrigger>
+          <TabsTrigger value="list">List</TabsTrigger>
+          <TabsTrigger value="card">Card</TabsTrigger>
         </TabsList>
-        <TabsContent value="grid">
-          <ListOfProducts products={products} showCollection={showCollection} />
+        <TabsContent value="list">
+          <ProductList products={products} showCollection={showCollection} />
         </TabsContent>
-        <TabsContent value="table">
-          <DataTable columns={columns} data={products} />
+        <TabsContent value="card">
+          <ProductCard products={products} showCollection={showCollection} />
         </TabsContent>
       </Tabs>
     </div>

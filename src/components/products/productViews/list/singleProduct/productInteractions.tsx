@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { deleteProduct } from "../../../server/actions/products";
-import EditProductForm from "../editProduct/editProductForm";
+import { deleteProduct } from "../../../../../server/actions/products";
+import EditProductForm from "../../../editProduct/editProductForm";
 import { LuTrash2, LuPencil } from "react-icons/lu";
 import SpinnerAnimation from "@/components/spinnerAnimation";
 import { Collection, Product, Tag } from "@/drizzle/schema";
@@ -55,7 +55,7 @@ export default function ProductInteractions({
         <LuPencil
           size={35}
           onClick={() => setOpenEditProduct(true)}
-          className="hover:cursor-pointer absolute flex top-2 right-12 p-2 bg-neutral-800 text-white shadow-md rounded-md hover:bg-neutral-700 transition-all"
+          className="hover:cursor-pointer absolute flex top-2 right-12 p-2 bg-neutral-900 text-white shadow-md rounded-md hover:bg-neutral-700 transition-all"
         />
         {isDeletingProduct ? (
           <span className="absolute flex top-2 right-2 p-2 bg-neutral-800 text-white shadow-md rounded-md hover:bg-neutral-700 transition-all">
@@ -65,7 +65,7 @@ export default function ProductInteractions({
           <LuTrash2
             size={35}
             onClick={handleDeleteProduct}
-            className="hover:cursor-pointer absolute flex top-2 right-2 p-2 bg-neutral-800 text-white shadow-md rounded-md hover:bg-neutral-700 transition-all"
+            className="hover:cursor-pointer absolute flex top-2 right-2 p-2 bg-neutral-900 text-white shadow-md rounded-md hover:bg-neutral-700 transition-all"
           />
         )}
       </div>

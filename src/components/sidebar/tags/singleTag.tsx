@@ -56,10 +56,12 @@ export default function SingleTag({
         <div className="flex items-center justify-center px-1 min-w-4">
           <p className="text-neutral-500">{count}</p>
         </div>
-        <div className="invisible absolute border bg-neutral-600 hover:bg-neutral-700 rounded-md right-3 top-1 flex items-center justify-center p-1 group-hover:visible">
+        <div className="invisible absolute border bg-neutral-600 hover:bg-neutral-700 rounded-md right-3 top-1 flex items-center justify-center group-hover:visible">
           <DropdownMenu onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger>
-              <LuMoreHorizontal />
+              <div className="p-1 rounded-md">
+                <LuMoreHorizontal />
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem

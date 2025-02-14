@@ -19,7 +19,7 @@ export default async function Tags() {
         </span>
         <TagForm clerkUserId={userId} />
       </div>
-      <div className="scrollbar-hide flex flex-col text-white w-full max-h-60 overflow-y-scroll">
+      <div className="scrollbar-hide flex flex-col text-white w-full ">
         {tags?.map((tag) => (
           <SingleTag
             id={tag.id}

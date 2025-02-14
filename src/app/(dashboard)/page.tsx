@@ -1,4 +1,4 @@
-import ListOfProducts from "@/components/products/list/listOfProducts";
+import ListOfProducts from "@/components/products/productViews/list/productList";
 import CollectionHeader from "@/components/collectionHeader";
 import { getProducts } from "@/server/actions/products";
 import { auth } from "@clerk/nextjs/server";
