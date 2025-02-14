@@ -15,18 +15,16 @@ export default async function ProductCard({
   const { tags } = await getTags();
 
   return (
-    <section className="flex flex-col gap-6">
-      <div className="w-full grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
-        {products?.map((product: Product) => (
-          <SingleProduct
-            key={product.id}
-            collections={collections}
-            tags={tags}
-            singleProduct={product}
-            showCollection={showCollection}
-          />
-        ))}
-      </div>
-    </section>
+    <div className="w-full grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
+      {products?.map((product: Product) => (
+        <SingleProduct
+          key={product.id}
+          collections={collections}
+          tags={tags}
+          singleProduct={product}
+          showCollection={showCollection}
+        />
+      ))}
+    </div>
   );
 }

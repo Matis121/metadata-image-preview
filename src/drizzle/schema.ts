@@ -8,6 +8,12 @@ import {
   unique,
 } from "drizzle-orm/pg-core";
 
+const createdAt = timestamp("createdAt").notNull().defaultNow();
+const updatedAt = timestamp("updatedAt")
+  .notNull()
+  .defaultNow()
+  .$onUpdate(() => new Date());
+
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
@@ -26,6 +32,8 @@ export const collection = pgTable(
     title: text("title").notNull(),
     description: text("description"),
     emoji: text("emoji").default(""),
+    createdAt,
+    updatedAt,
   },
   (collection) => ({
     uniqueCollectionPerUser: unique("uniqueCollectionPerUser").on(
@@ -41,6 +49,8 @@ export const tag = pgTable(
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     name: text("name").notNull(),
     clerkUserId: text("clerkUserId").notNull(),
+    createdAt,
+    updatedAt,
   },
   (tag) => ({
     uniqueTagPerUser: unique("uniqueTagPerUser").on(tag.clerkUserId, tag.name),
@@ -56,6 +66,8 @@ export const product = pgTable("product", {
   description: varchar({ length: 1500 }).notNull(),
   productUrl: varchar({ length: 2048 }).notNull(),
   imagePath: varchar({ length: 2048 }).notNull(),
+  createdAt,
+  updatedAt,
 });
 
 // Product-Tag relationship (Join Table)

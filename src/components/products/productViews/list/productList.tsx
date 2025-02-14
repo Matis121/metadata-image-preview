@@ -17,18 +17,16 @@ export default async function ProductList({
   const { tags } = await getTags();
 
   return (
-    <section className="flex flex-col gap-6">
-      <div className="w-full flex flex-col gap-6">
-        {products?.map((product: Product) => (
-          <SingleProduct
-            key={product.id}
-            collections={collections}
-            tags={tags}
-            singleProduct={product}
-            showCollection={showCollection}
-          />
-        ))}
-      </div>
-    </section>
+    <div className="w-full flex flex-col gap-4">
+      {products?.map((product: Product) => (
+        <SingleProduct
+          key={product.id}
+          collections={collections}
+          tags={tags}
+          singleProduct={product}
+          showCollection={showCollection}
+        />
+      ))}
+    </div>
   );
 }

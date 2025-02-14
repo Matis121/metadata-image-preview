@@ -29,7 +29,7 @@ export default async function productInformations({
 
   return (
     <>
-      <div className="flex gap-8 border dark:border-neutral-600 rounded-md overflow-hidden">
+      <div className="flex gap-8 border dark:border-neutral-600 rounded-md overflow-hidden min-h-48">
         <div className="min-w-48 max-w-48 overflow-hidden flex items-center justify-center border-r border-neutral-600">
           <Link
             href={`${singleProduct.productUrl}`}

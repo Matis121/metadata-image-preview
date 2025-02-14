@@ -13,7 +13,8 @@ export async function getCollections() {
     const collections = await db
       .select()
       .from(collection)
-      .where(eq(collection.clerkUserId, userId));
+      .where(eq(collection.clerkUserId, userId))
+      .orderBy(collection.createdAt);
     return { collections };
   } catch (error) {
     console.error("Error fetching collections:", error);
@@ -37,7 +38,8 @@ export async function getCollectionsWithCount() {
       .from(collection)
       .leftJoin(product, eq(product.collectionId, collection.id))
       .where(eq(collection.clerkUserId, userId))
-      .groupBy(collection.id);
+      .groupBy(collection.id)
+      .orderBy(collection.createdAt);
 
     return { collections };
   } catch (error) {

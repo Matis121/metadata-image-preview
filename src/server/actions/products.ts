@@ -14,7 +14,8 @@ export async function getProducts() {
     const products = await db
       .select()
       .from(product)
-      .where(and(eq(product.clerkUserId, userId), eq(product.inTrash, false)));
+      .where(and(eq(product.clerkUserId, userId), eq(product.inTrash, false)))
+      .orderBy(product.createdAt);
     return { products };
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -34,7 +35,8 @@ export async function getProductsFromCollection(collectionId: number) {
           eq(product.clerkUserId, userId),
           eq(product.collectionId, collectionId)
         )
-      );
+      )
+      .orderBy(product.createdAt);
     return { products };
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -49,7 +51,8 @@ export async function getProductsInTrash() {
     const products = await db
       .select()
       .from(product)
-      .where(and(eq(product.clerkUserId, userId), eq(product.inTrash, true)));
+      .where(and(eq(product.clerkUserId, userId), eq(product.inTrash, true)))
+      .orderBy(product.createdAt);
     return { products };
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -70,7 +73,8 @@ export async function getProductUnsorted() {
           isNull(product.collectionId),
           eq(product.inTrash, false)
         )
-      );
+      )
+      .orderBy(product.createdAt);
     return { products };
   } catch (error) {
     console.error("Error fetching products:", error);

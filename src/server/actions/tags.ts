@@ -11,7 +11,11 @@ export async function getTags() {
   if (!userId) return redirectToSignIn();
 
   try {
-    const tags = await db.select().from(tag).where(eq(tag.clerkUserId, userId));
+    const tags = await db
+      .select()
+      .from(tag)
+      .where(eq(tag.clerkUserId, userId))
+      .orderBy(tag.createdAt);
     return { tags };
   } catch (error) {
     console.error("Error fetching collections:", error);
@@ -33,7 +37,8 @@ export async function getTagsWithCount() {
       .from(tag)
       .leftJoin(productTag, eq(productTag.tagId, tag.id))
       .where(eq(tag.clerkUserId, userId))
-      .groupBy(tag.id);
+      .groupBy(tag.id)
+      .orderBy(tag.createdAt);
     return { tags };
   } catch (error) {
     console.error("Error fetching collections:", error);
