@@ -6,6 +6,8 @@ import {
 } from "@/server/actions/tags";
 import { useMemo, useState } from "react";
 import { Product, Tag } from "@/drizzle/schema";
+import toast from "react-hot-toast";
+import { CollectionOrTagSchema } from "@/schema/validations";
 
 type ProductTag = {
   id: number;
@@ -27,10 +29,6 @@ export default function Tags({
 }) {
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [tagName, setTagName] = useState("");
-
-  const CollectionSchema = z.object({
-    name: z.string().min(1).max(30),
-  });
 
   // Filter out tags already used in the product
   const notUsedTags = useMemo(
@@ -59,8 +57,11 @@ export default function Tags({
 
       if (filteredTags.length === 0) {
         const newTag = { name: tagName };
-        const result = CollectionSchema.safeParse(newTag);
+        const result = CollectionOrTagSchema.safeParse(newTag);
         if (!result.success) {
+          result.error.errors.forEach((err) => {
+            toast.error(err.message);
+          });
           return;
         }
 

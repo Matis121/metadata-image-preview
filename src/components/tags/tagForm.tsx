@@ -13,21 +13,21 @@ import SubmitButton from "../submitButton";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import { createTag } from "@/server/actions/tags";
+import { CollectionOrTagSchema } from "@/schema/validations";
 
 export default function TagForm({ clerkUserId }: { clerkUserId: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [openDialog, setOpenDialog] = useState(false);
-  const CollectionSchema = z.object({
-    name: z.string(),
-  });
 
   const handleSubmit = async (formData: FormData) => {
     const newTag = {
       name: formData.get("name") as string,
     };
-    const result = CollectionSchema.safeParse(newTag);
+    const result = CollectionOrTagSchema.safeParse(newTag);
     if (!result.success) {
-      toast.error("Try again!");
+      result.error.errors.forEach((err) => {
+        toast.error(`${err.message}`);
+      });
       return;
     }
     const response = await createTag(newTag.name);

@@ -29,7 +29,7 @@ export default async function Collections() {
         </span>
         <CollectionForm clerkUserId={userId} />
       </div>
-      <div className="flex flex-col text-white w-full">
+      <div className="scrollbar-hide flex flex-col text-white w-full max-h-60 overflow-y-scroll">
         {collections?.length > 0 &&
           collections.map((collection: Collection) => (
             <SingleCollection

@@ -10,7 +10,7 @@ import { Dispatch, SetStateAction, useRef } from "react";
 import { Input } from "../ui/input";
 import SubmitButton from "../submitButton";
 import toast from "react-hot-toast";
-import { z } from "zod";
+import { CollectionOrTagSchema } from "@/schema/validations";
 
 type CollectionEdit = {
   open: boolean;
@@ -29,18 +29,12 @@ export default function CollectionEditForm({
 }: CollectionEdit) {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const CollectionSchema = z.object({
-    name: z
-      .string()
-      .max(26, { message: "Must be 26 or fewer characters long" }),
-  });
-
   const handleSubmit = async (formData: FormData) => {
     const newCollection = {
       name: formData.get("name") as string,
     };
 
-    const result = CollectionSchema.safeParse(newCollection);
+    const result = CollectionOrTagSchema.safeParse(newCollection);
     if (!result.success) {
       result.error.errors.forEach((err) => {
         toast.error(`${err.message}`);
