@@ -20,7 +20,6 @@ export default async function Collections() {
     return;
   }
   const { collections } = await getCollectionsWithCount();
-  console.log(collections);
 
   return (
     <div className="flex flex-col items-start w-full">

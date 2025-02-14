@@ -10,7 +10,6 @@ export default async function Tags() {
   }
 
   const { tags } = await getTagsWithCount();
-  console.log(tags);
 
   return (
     <div className="flex flex-col items-start w-full">
