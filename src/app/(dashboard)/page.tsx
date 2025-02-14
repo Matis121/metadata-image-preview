@@ -13,7 +13,7 @@ export default async function Home() {
     <div className="w-full flex flex-col gap-4">
       <PageTopSection clerkUserId={userId} />
       <CollectionHeader headerName="All bookmarks" />
-      <ProductsView fetchProductsType="getProducts" />
+      <ProductsView fetchProductsType="getProducts" showCollection={true} />
     </div>
   );
 }

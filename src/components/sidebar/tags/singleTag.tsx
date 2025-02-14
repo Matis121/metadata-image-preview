@@ -45,7 +45,7 @@ export default function SingleTag({
       <Link
         href={`/tags/${id}`}
         key={id}
-        className={`relative group cursor-pointer px-4 py-1 dark:text-neutral-300 text-sm font-normal flex items-center justify-between gap-2 hover:dark:bg-neutral-900 ${
+        className={`relative group cursor-pointer px-4 py-1.5 dark:text-neutral-300 text-sm font-normal flex items-center justify-between gap-2 hover:dark:bg-neutral-900 ${
           isActive && "dark:bg-neutral-900"
         }`}
       >
@@ -54,9 +54,9 @@ export default function SingleTag({
           {title}
         </div>
         <div className="flex items-center justify-center px-1 min-w-4">
-          {count}
+          <p className="text-neutral-500">{count}</p>
         </div>
-        <div className="invisible absolute border bg-neutral-600 hover:bg-neutral-700 rounded-md right-3 top-0.5 flex items-center justify-center p-1 group-hover:visible">
+        <div className="invisible absolute border bg-neutral-600 hover:bg-neutral-700 rounded-md right-3 top-1 flex items-center justify-center p-1 group-hover:visible">
           <DropdownMenu onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger>
               <LuMoreHorizontal />

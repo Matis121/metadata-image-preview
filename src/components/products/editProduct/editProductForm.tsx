@@ -169,23 +169,6 @@ export default function EditProductForm({
             <label className="text-neutral-700 text-sm" htmlFor="tag">
               Tags
             </label>
-            {/* <Select
-              name="tag"
-              onValueChange={(value) => setProductTagId(parseFloat(value))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Add tags" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {tags?.map((tag: Tag) => (
-                    <SelectItem key={tag.id} value={tag.id.toString()}>
-                      {tag.name}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select> */}
             <Tags
               clerkUserId={clerkUserId}
               tags={tags}

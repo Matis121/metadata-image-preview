@@ -6,7 +6,6 @@ import EditProductForm from "../editProduct/editProductForm";
 import { LuTrash2, LuPencil } from "react-icons/lu";
 import SpinnerAnimation from "@/components/spinnerAnimation";
 import { Collection, Product, Tag } from "@/drizzle/schema";
-import { auth } from "@clerk/nextjs/server";
 
 type ProductTag = {
   id: number;

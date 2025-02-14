@@ -13,6 +13,7 @@ import { getProductsByTag } from "@/server/actions/tags";
 export default async function ProductsView({
   fetchProductsType,
   fetchArgument,
+  showCollection,
 }: {
   fetchProductsType:
     | "getProductUnsorted"
@@ -21,6 +22,7 @@ export default async function ProductsView({
     | "getProducts"
     | "getsProductsInTrash";
   fetchArgument?: any;
+  showCollection?: boolean;
 }) {
   let response;
 
@@ -54,7 +56,7 @@ export default async function ProductsView({
           <TabsTrigger value="table">Table</TabsTrigger>
         </TabsList>
         <TabsContent value="grid">
-          <ListOfProducts products={products} />
+          <ListOfProducts products={products} showCollection={showCollection} />
         </TabsContent>
         <TabsContent value="table">
           <DataTable columns={columns} data={products} />
